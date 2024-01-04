@@ -16,6 +16,7 @@ public class TeleopMode extends OpMode {
     //now new code
     private DcMotor armMotor;
 
+    private double armPosition;
     private CRServo clawServo;
 
 
@@ -27,6 +28,7 @@ public class TeleopMode extends OpMode {
         backRight = hardwareMap.get(DcMotor.class, "br");
         armMotor = hardwareMap.get(DcMotor.class, "am");
 //        clawServo = hardwareMap.get(CRServo.class, "cs");
+        armPosition = 0;
     }
 
     public void driveOmni(double y, double rx, double x){
@@ -54,10 +56,12 @@ public class TeleopMode extends OpMode {
     public void armControl(boolean armUp, boolean armDown) {
         //armUp = false;
         double armPower;
-        if (armUp == true) {
+        if (armUp == true && armPosition <= 3) {
             armPower = .3;
-        } else if (armDown == true) {
+            armPosition++;
+        } else if (armDown == true && armPosition >= -3) {
             armPower = -.3;
+            armPosition--;
         } else {
             armPower = 0;
         }
