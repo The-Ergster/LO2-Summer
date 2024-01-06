@@ -18,7 +18,7 @@ public class redClose extends OpMode {
     private DcMotor backRight;
     private DcMotor backLeft;
     // down there makes a webcam
-    private Webcam webcam;
+//    private Webcam webcam;
     double power = 1;
     int step=0;
     int delayStep=-1;
