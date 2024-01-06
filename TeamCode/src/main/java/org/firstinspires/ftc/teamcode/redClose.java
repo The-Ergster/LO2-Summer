@@ -18,7 +18,7 @@ public class redClose extends OpMode {
     private DcMotor backRight;
     private DcMotor backLeft;
     // down there makes a webcam
-//    private Webcam webcam;
+    private Webcam webcam;
     double power = 1;
     int step=0;
     int delayStep=-1;
@@ -43,7 +43,7 @@ public class redClose extends OpMode {
         frontRight = hardwareMap.get(DcMotor.class, "fr");
         backLeft = hardwareMap.get(DcMotor.class, "bl");
         backRight = hardwareMap.get(DcMotor.class, "br");
-//        this.webcam = new Webcam(this.hardwareMap, "Webcam");
+        this.webcam = new Webcam(this.hardwareMap, "Webcam");
 //        this.webcam.open(new ColorCapturePipeline());
 //        private AbstractResultCvPipeline<?> pipeline;
     }
@@ -74,7 +74,7 @@ public class redClose extends OpMode {
         switch (step){
             case (0):
                 driveOmni(0,00,0.5);
-                delayedStop(2300);
+                delayedStop(2500);
                 break;
         }
     }
