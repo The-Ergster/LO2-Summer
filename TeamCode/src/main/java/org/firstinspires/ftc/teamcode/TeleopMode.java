@@ -55,10 +55,10 @@ public class TeleopMode extends OpMode {
     public void armControl(boolean armUp, boolean armDown) {
         //armUp = false;
         double armPower;
-        if (armUp == true && armPosition <= 3) {
+        if (armUp == true && armPosition <= 13) {
             armPower = .3;
             armPosition++;
-        } else if (armDown == true && armPosition >= -3) {
+        } else if (armDown == true && armPosition >= 0) {
             armPower = -.3;
             armPosition--;
         } else {
