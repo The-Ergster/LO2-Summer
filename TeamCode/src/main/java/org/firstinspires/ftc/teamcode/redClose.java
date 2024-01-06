@@ -43,7 +43,7 @@ public class redClose extends OpMode {
         frontRight = hardwareMap.get(DcMotor.class, "fr");
         backLeft = hardwareMap.get(DcMotor.class, "bl");
         backRight = hardwareMap.get(DcMotor.class, "br");
-        this.webcam = new Webcam(this.hardwareMap, "Webcam");
+//        this.webcam = new Webcam(this.hardwareMap, "Webcam");
 //        this.webcam.open(new ColorCapturePipeline());
 //        private AbstractResultCvPipeline<?> pipeline;
     }
