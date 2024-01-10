@@ -15,7 +15,6 @@ public class TeleopMode extends OpMode {
     private DcMotor backLeft;
     //now new code
     private DcMotor armMotor;
-
     private double armPosition;
     private CRServo clawServo;
 
@@ -27,7 +26,7 @@ public class TeleopMode extends OpMode {
         backLeft = hardwareMap.get(DcMotor.class, "bl");
         backRight = hardwareMap.get(DcMotor.class, "br");
         armMotor = hardwareMap.get(DcMotor.class, "am");
-//        clawServo = hardwareMap.get(CRServo.class, "cs");
+        clawServo = hardwareMap.get(CRServo.class, "cs");
         armPosition = 0;
     }
 
@@ -68,7 +67,7 @@ public class TeleopMode extends OpMode {
 
         armMotor.setPower(armPower);
     }
-/*    public void clawControl(boolean clawOpen, boolean clawClose) {
+    public void clawControl(boolean clawOpen, boolean clawClose) {
         clawClose = false;
         double clawPower;
         if (clawClose == true) {
@@ -81,12 +80,11 @@ public class TeleopMode extends OpMode {
 
         clawServo.setPower(clawPower);
     }
-    */
 
     @Override
     public void loop() {
         driveOmni(-1*gamepad1.left_stick_y, 1*gamepad1.right_stick_x, 1*gamepad1.left_stick_x);
         armControl(gamepad1.left_bumper, gamepad1.right_bumper);
-        // clawControl(gamepad1.a, gamepad1.b);
+        clawControl(gamepad1.a, gamepad1.b);
     }
 }

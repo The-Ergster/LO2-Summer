@@ -43,7 +43,7 @@ public class blueFar extends OpMode {
         frontRight = hardwareMap.get(DcMotor.class, "fr");
         backLeft = hardwareMap.get(DcMotor.class, "bl");
         backRight = hardwareMap.get(DcMotor.class, "br");
-        this.webcam = new Webcam(this.hardwareMap, "Webcam");
+//        this.webcam = new Webcam(this.hardwareMap, "Webcam");
 //        this.webcam.open(new ColorCapturePipeline());
 //        private AbstractResultCvPipeline<?> pipeline;
     }
@@ -70,15 +70,14 @@ public class blueFar extends OpMode {
 
     @Override
     public void loop() {
-
         switch (step){
             case (0):
-                driveOmni(0.5,00,0);
-                delayedStop(500);
+                driveOmni(0,00,0);
+                delayedStop(1000);
                 break;
             case (1):
                 driveOmni(0,0,-0.5);
-                delayedStop(1000);
+                delayedStop(7000);
                 break;
         }
     }
