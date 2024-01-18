@@ -67,18 +67,16 @@ public class redFar extends OpMode {
         backRight.setPower(0);
     }
 
-
     @Override
     public void loop() {
-
         switch (step){
             case (0):
                 driveOmni(0.5,00,0);
-                delayedStop(1000);
+                delayedStop(2000);
                 break;
             case (1):
-                driveOmni(0,0,0.5);
-                delayedStop(7000);
+                driveOmni(-0.08,0,0.5);
+                delayedStop(5500);
                 break;
         }
     }

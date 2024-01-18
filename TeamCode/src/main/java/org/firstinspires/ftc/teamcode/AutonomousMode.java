@@ -32,9 +32,11 @@ public class AutonomousMode extends OpMode {
         backLeft = hardwareMap.get(DcMotor.class, "bl");
         backRight = hardwareMap.get(DcMotor.class, "br");
         this.webcam = new Webcam(this.hardwareMap, "Webcam");
-//        this.webcam.open(new ColorCapturePipeline());
-//        private AbstractResultCvPipeline<?> pipeline;
+//        this.webcam.open(new ());
+
     }
+
+
     public void delayedStop(double delay){
         if (delayStep!=step){
             delayStep=step;

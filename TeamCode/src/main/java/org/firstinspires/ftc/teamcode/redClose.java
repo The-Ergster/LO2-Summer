@@ -74,7 +74,7 @@ public class redClose extends OpMode {
         switch (step){
             case (0):
                 driveOmni(0,00,0.5);
-                delayedStop(2400);
+                delayedStop(2300);
                 break;
         }
     }

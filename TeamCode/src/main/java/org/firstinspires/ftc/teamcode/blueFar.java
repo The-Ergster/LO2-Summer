@@ -72,12 +72,12 @@ public class blueFar extends OpMode {
     public void loop() {
         switch (step){
             case (0):
-                driveOmni(0,00,0);
+                driveOmni(0.5,00,0);
                 delayedStop(1000);
                 break;
             case (1):
-                driveOmni(0,0,-0.5);
-                delayedStop(7000);
+                driveOmni(-0.08,0,-0.5);
+                delayedStop(6500);
                 break;
         }
     }
