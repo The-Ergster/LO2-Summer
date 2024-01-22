@@ -9,7 +9,7 @@ import vision.Webcam;
 
 
 @TeleOp
-public class TeleopMode extends OpMode {
+public class exposureAndGainPractice extends OpMode {
     @Override
     private DcMotor frontLeft;
     private DcMotor frontRight;
