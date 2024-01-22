@@ -32,7 +32,14 @@ public class AutonomousMode extends OpMode {
         backLeft = hardwareMap.get(DcMotor.class, "bl");
         backRight = hardwareMap.get(DcMotor.class, "br");
         this.webcam = new Webcam(this.hardwareMap, "Webcam");
+        //
+        webcamName camera = hardwareMap.get(WebcamName.class, "Webcam 1");
+        VisionPortal visionportal = VisionPortal.easyCreateWithDefeualts(camera, visionProcessors);
 //        this.webcam.open(new ());
+        // create Tensorflow processor
+        TfodProcessor tfodProcessor = TfodProcessor.easyCreateWithDefaults();
+        // Create VisionPortal with TensorFlow processors
+        VisionPortal visionPortal = VisionPortal.easyCreateWithDefaults(camera, tfodProcessor);
 
     }
 
@@ -73,7 +80,7 @@ public class AutonomousMode extends OpMode {
 
     @Override
     public void loop() {
-        switch (step){
+      /*  switch (step){
             case (0):
                 driveOmni(0,00,0);
                 delayedStop(1000);
@@ -82,6 +89,22 @@ public class AutonomousMode extends OpMode {
                 driveOmni(0,0,-0.5);
                 delayedStop(7000);
                 break;
-        }
+        */
+        
+        // get regonized objects from TensorFlow
+        List <Recognition> recognitions = tfodProcessor.getRecognized();
+        // Iterate through each recognized object on list
+        for(Recognition recognition : recognitions)
+        {
+            //  get labels of the recognized object
+            String label = recognition.getLabel();
+            
+            // get confidence of recognized object
+            float confidence = recognition.getConfidence();
+            
+            // add label & confidence to telemetry
+            telemetry.addLine("Recognized object: ", + label);
+            telemerty.addLine("Confidence: " + confidence);
+      }
     }
 }
