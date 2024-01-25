@@ -9,19 +9,19 @@ import vision.Webcam;
 
 
 @TeleOp
-public class exposureAndGainPractice extends OpMode {
-    @Override
+public class exposureAndGainPractice {
     private DcMotor frontLeft;
     private DcMotor frontRight;
     private DcMotor backRight;
     private DcMotor backLeft;
+
     //now new code
     private Webcam webcamName;
-
-    public void init() {
-        webcamName camera = hardwareMap.get(webcamName.class, "wc");
+}
+//    public void init() {
+//        webcamName camera = hardwareMap.get(webcamName.class, "wc");
         // Get exposure and gain control
-        ExposureControl exposureControl = visionPortal.getCameraControl(ExposureControl.class);
+ /*       ExposureControl exposureControl = visionPortal.getCameraControl(ExposureControl.class);
         GxposureControl gainControl = visionPortal.getCameraControl(GainControl.class); 
 
         // Check if control and manual mode are supported by this camera
@@ -42,7 +42,10 @@ public class exposureAndGainPractice extends OpMode {
         gainControl.setGain(gain);
     }
 
-    public void driveOmni(double y, double rx, double x){
+  */
+/*
+    public void driveOmni(double y, double rx, double x)
+        {
         double maxValue = Math.max(Math.abs(y) + Math.abs(x) + Math.abs(rx), 1);
         double flPower = (y + x + rx) / maxValue;
         double blPower = (y - x + rx) / maxValue;
@@ -54,8 +57,11 @@ public class exposureAndGainPractice extends OpMode {
         backLeft.setPower(blPower);
         backRight.setPower(brPower);
     }
-    @Override
-    public void loop() {
+    */
+
+/*    public void loop() {
+
     
     }
-}
+
+*/
