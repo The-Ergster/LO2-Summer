@@ -12,7 +12,7 @@ import org.firstinspires.ftc.vision.tfod.TfodProcessor;
 import java.util.List
 
 @TeleOp(name = "Concept: TensorFlow Object Detection Easy", group = "Concept")
-public class TFOD extends OpMode extends LinearOpMode{
+public class SampleTFOD extends OpMode extends LinearOpMode{
   private static final boolean USE_WEBCAM = true;
 }
 
