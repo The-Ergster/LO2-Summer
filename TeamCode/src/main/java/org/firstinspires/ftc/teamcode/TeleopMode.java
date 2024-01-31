@@ -79,9 +79,10 @@ public class TeleopMode extends OpMode {
         }
 
         clawServo.setPower(clawPower);
-*/
-}
 
+}
+*/
+    
     @Override
     public void loop() {
         driveOmni(-1*gamepad1.left_stick_y, 1*gamepad1.right_stick_x, 1*gamepad1.left_stick_x);
