@@ -1,3 +1,5 @@
+package org.firstinspires.ftc.teamcode;
+
 import org.opencv.core.Core;
 import org.opencv.core.Mat;
 import org.opencv.core.MatOfPoint;
@@ -24,7 +26,6 @@ public class TeamPropDetector extends OpenCvPipeline {
      *
      * @param width The width of the image (check your camera)
      */
-  
     public TeamPropDetector(int width) {
         this.width = width;
     }
@@ -36,38 +37,34 @@ public class TeamPropDetector extends OpenCvPipeline {
         // the function will return a matrix to be drawn on your phone's screen
 
         // The detector detects regular stones. The camera fits two stones.
-        // If it finds one regular stone then the other must be the skystone.
+        // If it finds one regular stone then the other must be the TeamProp.
         // If both are regular stones, it returns NONE to tell the robot to keep looking
 
         // Make a working copy of the input matrix in HSV
         Mat mat = new Mat();
         Imgproc.cvtColor(input, mat, Imgproc.COLOR_RGB2HSV);
 
-        // if something is wrong, we assume there's no skystone
+        // if something is wrong, we assume there's no team prop
         if (mat.empty()) {
             location = TeamPropLocation.NONE;
             return input;
         }
 
         // We create a HSV range for yellow to detect regular stones
-        // NOTE: In OpenCV's implementation, hue values are half the real value
+        // NOTE: In OpenCV's implementation, Hue values are half the real value
         Scalar lowHSV = new Scalar(20, 100, 100); // lower bound HSV for yellow
         Scalar highHSV = new Scalar(30, 255, 255); // higher bound HSV for yellow
-        // NOTE: We
         Mat thresh = new Mat();
-/* 
-        // { I don't think we need this down there }
+
         // We'll get a black and white image. The white regions represent the regular stones.
         // inRange(): thresh[i][j] = {255,255,255} if mat[i][i] is within the range
-        Core.inRange(mat, lowHSV, highHSV, thresh);
-*/
+        // Core.inRange(mat, lowHSV, highHSV, thresh);
+
         // Use Canny Edge Detection to find edges
-        // you might have to tune the thresholds for hysteresis
         Mat edges = new Mat();
         Imgproc.Canny(thresh, edges, 100, 300);
 
-        // https://docs.opencv.org/3.4/da/d0c/tutorial_bounding_rects_circles.html
-        // Oftentimes the edges are disconnected. findContours connects these edges.
+        // findContours connects disconnected edges.
         // We then find the bounding rectangles of those contours
         List<MatOfPoint> contours = new ArrayList<>();
         Mat hierarchy = new Mat();
@@ -81,13 +78,11 @@ public class TeamPropDetector extends OpenCvPipeline {
             boundRect[i] = Imgproc.boundingRect(new MatOfPoint(contoursPoly[i].toArray()));
         }
 
-        // Iterate and check whether the bounding boxes
-        // cover left and/or right side of the image
+        // Iterate and check whether the bounding boxes cover left and/or right side of the image
         double left_x = 0.25 * width;
         double right_x = 0.75 * width;
-        boolean left = false; // true if team prop found on the left side
-        boolean right = false; // true if team prop found on the right side
-        // if both are false, hopefully we can make it go foreword
+        boolean left = false; // true if regular stone found on the left side
+        boolean right = false; // "" "" on the right side
         for (int i = 0; i != boundRect.length; i++) {
             if (boundRect[i].x < left_x)
                 left = true;
@@ -99,18 +94,14 @@ public class TeamPropDetector extends OpenCvPipeline {
             Imgproc.rectangle(mat, boundRect[i], new Scalar(0.5, 76.9, 89.8));
         }
 
-        // if there is no yellow regions on a side
-        // that side should be a Skystone
-        if (!left) location = TeamPropLocation.LEFT;
-        else if (!right) location = TeamPropLocation.RIGHT;
-        // if both are true, then there's no Skystone in front.
-        // since our team's camera can only detect two at a time, we will need to scan the next 2 stones
+        if (left) location = TeamPropLocation.LEFT;
+        else if (right) location = TeamPropLocation.RIGHT;
         else location = TeamPropLocation.NONE;
 
         return mat; // return the mat with rectangles drawn
     }
 
-    public SkystoneLocation getLocation() {
+    public TeamPropLocation getLocation() {
         return this.location;
     }
 }
