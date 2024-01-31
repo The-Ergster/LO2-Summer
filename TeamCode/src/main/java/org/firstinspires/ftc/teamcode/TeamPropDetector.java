@@ -83,12 +83,12 @@ public class TeamPropDetector extends OpenCvPipeline {
         double right_x = 0.75 * width;
         boolean left = false; // true if regular stone found on the left side
         boolean right = false; // "" "" on the right side
+        
         for (int i = 0; i != boundRect.length; i++) {
             if (boundRect[i].x < left_x)
                 left = true;
             if (boundRect[i].x + boundRect[i].width > right_x)
                 right = true;
-
             // draw red bounding rectangles on mat
             // the mat has been converted to HSV so we need to use HSV as well
             Imgproc.rectangle(mat, boundRect[i], new Scalar(0.5, 76.9, 89.8));
