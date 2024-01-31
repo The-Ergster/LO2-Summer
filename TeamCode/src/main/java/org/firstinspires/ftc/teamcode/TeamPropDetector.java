@@ -13,14 +13,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class TeamPropDetector extends OpenCvPipeline {
-    enum TeamPropLocation {
-        LEFT,
-        RIGHT,
-        NONE
-    }
 
     private int width; // width of the image
-    TeamPropLocation location;
+    boolean isTeamPropHere;
 
     /**
      *
@@ -94,14 +89,16 @@ public class TeamPropDetector extends OpenCvPipeline {
             Imgproc.rectangle(mat, boundRect[i], new Scalar(0.5, 76.9, 89.8));
         }
 
-        if (left) location = TeamPropLocation.LEFT;
+/*        if (left) location = TeamPropLocation.LEFT;
         else if (right) location = TeamPropLocation.RIGHT;
         else location = TeamPropLocation.NONE;
+        */
+        // now I need to code something that detects whether the team prop is in the middle
 
         return mat; // return the mat with rectangles drawn
     }
 
     public TeamPropLocation getLocation() {
-        return this.location;
+        return this.isTeamPropHere;
     }
 }
