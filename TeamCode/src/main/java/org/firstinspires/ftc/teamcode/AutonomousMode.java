@@ -15,6 +15,11 @@ import org.firstinspires.ftc.robotcore.external.tfod.Recognition;
 import org.firstinspires.ftc.vision.VisionPortal;
 import org.firstinspires.ftc.vision.tfod.TfodProcessor;
 
+import org.openftc.easyopencv.OpenCvCamera;
+import org.openftc.easyopencv.OpenCvCameraFactory;
+import org.openftc.easyopencv.OpenCvCameraRotation;
+import org.openftc.easyopencv.OpenCvInternalCamera;
+
 import java.util.List;
 
 @Autonomous
@@ -39,8 +44,11 @@ public class AutonomousMode extends OpMode {
         frontRight = hardwareMap.get(DcMotor.class, "fr");
         backLeft = hardwareMap.get(DcMotor.class, "bl");
         backRight = hardwareMap.get(DcMotor.class, "br");
-        this.webcam = new Webcam(this.hardwareMap, "Webcam");
-        Webcam camera = hardwareMap.get(Webcam.class, "Webcam 1");
+        // note: I don't actually know the width or height, should probably check this.
+        int width = 320;
+        int height = 240;
+        TeamPropDetector detector = new TeamPropDetector(width);
+        OpenCvCamera phoneCam;
 
 /*
         VisionPortal visionportal = VisionPortal.easyCreateWithDefeualts(camera, visionProcessors);
@@ -90,6 +98,23 @@ public class AutonomousMode extends OpMode {
 
     @Override
     public void loop() {
+        // Initialize the camera
+        this.webcam = new Webcam(this.hardwareMap, "Webcam");
+        Webcam camera = hardwareMap.get(Webcam.class, "Webcam 1");
+        // int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
+        phoneCam = OpenCvCameraFactory.getInstance().createInternalCamera(OpenCvInternalCamera.CameraDirection.BACK, cameraMonitorViewId);
+        // Connect to the camera
+        phoneCam.openCameraDevice();
+        // Use the TeamPropDetector pipeline
+        // processFrame() will be called to process the frame
+        phoneCam.setPipeline(detector);
+        // Remember to change the camera rotation
+        phoneCam.startStreaming(width, height, OpenCvCameraRotation.SIDEWAYS_LEFT);
+
+        //...
+
+       TeamPropDetector.TeamPropLocation location = detector.getLocation();
+        // add an if statement about location here, moving differently depending on the location
       /*  switch (step){
             case (0):
                 driveOmni(0,00,0);
