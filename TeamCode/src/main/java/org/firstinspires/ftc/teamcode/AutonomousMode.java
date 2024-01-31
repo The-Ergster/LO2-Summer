@@ -114,6 +114,18 @@ public class AutonomousMode extends OpMode {
         //...
 
        TeamPropDetector.TeamPropLocation location = detector.getLocation();
+       // check for team prop in front of robot
+       driveOmni(0,00,0.5); 
+       delayedStop(1000);
+       // check for team prop in front of robot
+       driveOmni(0,00,0.5); 
+       delayedStop(2000);
+       // check for team prop in front of robot
+        
+
+
+
+        
         // add an if statement about location here, moving differently depending on the location
       /*  switch (step){
             case (0):
