@@ -85,6 +85,7 @@ public class AutonomousMode extends OpMode {
         frontRight.setPower(frPower);
         backLeft.setPower(blPower);
         backRight.setPower(brPower);
+        
 
     }
 
@@ -93,6 +94,18 @@ public class AutonomousMode extends OpMode {
         frontRight.setPower(0);
         backLeft.setPower(0);
         backRight.setPower(0);
+    }
+
+    public void placePurplePixel() {
+         switch (step){
+            case (0):
+                driveOmni(0.5,00,0);
+                delayedStop(1500);
+                break;
+            case (1):
+                driveOmni(-0.5,0,-0);
+                delayedStop(15000);
+                break;
     }
 
 
@@ -113,15 +126,22 @@ public class AutonomousMode extends OpMode {
 
         //...
 
-       TeamPropDetector.TeamPropLocation location = detector.getLocation();
-       // check for team prop in front of robot
-       driveOmni(0,00,0.5); 
-       delayedStop(1000);
-       // check for team prop in front of robot
-       driveOmni(0,00,0.5); 
-       delayedStop(2000);
-       // check for team prop in front of robot
-        
+       TeamPropDetector.TeamPropLocation isTeamPropHere = detector.getLocation();
+       if (isTeamPropHere) {
+           placePurplePixel();
+       } else {
+           driveOmni(0,00,0.5); 
+           delayedStop(1000);
+           // check for team prop in front of robot
+           TeamPropDetector.TeamPropLocation isTeamPropHere = detector.getLocation();
+           if (isTeamPropHere) {
+              placePurplePixel();
+           } else {
+               // we assume it's in this third position, if it isn't in the other two.
+               driveOmni(0,00,0.5); 
+               delayedStop(2000);
+               placePurplePixel();
+           }
 
 
 
