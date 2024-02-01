@@ -31,10 +31,6 @@ public class TeamPropDetector extends OpenCvPipeline {
         // the input matrix is the image coming from the camera
         // the function will return a matrix to be drawn on your phone's screen
 
-        // The detector detects regular stones. The camera fits two stones.
-        // If it finds one regular stone then the other must be the TeamProp.
-        // If both are regular stones, it returns NONE to tell the robot to keep looking
-
         // Make a working copy of the input matrix in HSV
         Mat mat = new Mat();
         Imgproc.cvtColor(input, mat, Imgproc.COLOR_RGB2HSV);
@@ -45,7 +41,6 @@ public class TeamPropDetector extends OpenCvPipeline {
             return input;
         }
 
-        // We create a HSV range for yellow to detect regular stones
         // NOTE: In OpenCV's implementation, Hue values are half the real value
         Scalar lowHSV = new Scalar(20, 100, 100); // lower bound HSV for yellow
         Scalar highHSV = new Scalar(30, 255, 255); // higher bound HSV for yellow
@@ -59,6 +54,7 @@ public class TeamPropDetector extends OpenCvPipeline {
         Mat edges = new Mat();
         Imgproc.Canny(thresh, edges, 100, 300);
 
+        // https://docs.opencv.org/3.4/da/d0c/tutorial_bounding_rects_circles.html
         // findContours connects disconnected edges.
         // We then find the bounding rectangles of those contours
         List<MatOfPoint> contours = new ArrayList<>();
@@ -97,7 +93,7 @@ public class TeamPropDetector extends OpenCvPipeline {
         else if (right) location = TeamPropLocation.RIGHT;
         else location = TeamPropLocation.NONE;
         */
-        // now I need to code something that detects whether the team prop is in the middle
+        // in theory, this should detect if the team prop is in the middle
         if (middle) {
             isTeamPropHere = true;
         } else {
