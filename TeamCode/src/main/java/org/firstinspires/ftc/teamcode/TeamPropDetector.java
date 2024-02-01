@@ -41,8 +41,9 @@ public class TeamPropDetector extends OpenCvPipeline {
         }
 
         // NOTE: In OpenCV's implementation, Hue values are half the real value
-        Scalar lowHSV = new Scalar(20, 100, 100); // lower bound HSV for yellow
-        Scalar highHSV = new Scalar(30, 255, 255); // higher bound HSV for yellow
+        // currently for yellow
+        Scalar lowHSV = new Scalar(20, 100, 100); // lower bound HSV
+        Scalar highHSV = new Scalar(30, 255, 255); // higher bound HSV
         Mat thresh = new Mat();
 
         // gets a black & white image
