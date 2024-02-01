@@ -87,6 +87,6 @@ public class TeleopMode extends OpMode {
     public void loop() {
         driveOmni(-1*gamepad1.left_stick_y, 1*gamepad1.right_stick_x, 1*gamepad1.left_stick_x);
         armControl(gamepad1.left_bumper, gamepad1.right_bumper);
-        clawControl(gamepad1.a, gamepad1.b);
+//        clawControl(gamepad1.a, gamepad1.b);
     }
 }

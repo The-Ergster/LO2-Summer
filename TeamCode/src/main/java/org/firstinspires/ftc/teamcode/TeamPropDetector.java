@@ -1,6 +1,5 @@
 package org.firstinspires.ftc.teamcode;
 
-import org.opencv.core.Core;
 import org.opencv.core.Mat;
 import org.opencv.core.MatOfPoint;
 import org.opencv.core.MatOfPoint2f;
@@ -15,7 +14,7 @@ import java.util.List;
 public class TeamPropDetector extends OpenCvPipeline {
 
     private int width; // width of the image
-    boolean isTeamPropHere;
+    public static boolean isTeamPropHere;
 
     /**
      *
@@ -37,7 +36,7 @@ public class TeamPropDetector extends OpenCvPipeline {
 
         // if something is wrong, we assume there's no team prop
         if (mat.empty()) {
-            location = TeamPropLocation.NONE;
+            // say that prop is not here
             return input;
         }
 
@@ -72,8 +71,9 @@ public class TeamPropDetector extends OpenCvPipeline {
         // Iterate and check whether the bounding boxes cover left and/or right side of the image
         double left_x = 0.25 * width;
         double right_x = 0.75 * width;
-        boolean left = false; // true if regular stone found on the left side
-        boolean right = false; // "" "" on the right side
+        boolean left = false;
+        boolean right = false;
+        boolean middle = false;
         
         for (int i = 0; i != boundRect.length; i++) {
             /*
@@ -82,7 +82,7 @@ public class TeamPropDetector extends OpenCvPipeline {
             if (boundRect[i].x + boundRect[i].width > right_x)
                 right = true;
            */
-            if (boundRect[i].x + boundRect[i].width < right_x && boundRect[i].x + boundRect[i].width > left)
+            if (boundRect[i].x + boundRect[i].width < right_x && boundRect[i].x + boundRect[i].width > left_x)
                 middle = true;
             // draw red bounding rectangles on mat
             // the mat has been converted to HSV so we need to use HSV as well
@@ -102,7 +102,7 @@ public class TeamPropDetector extends OpenCvPipeline {
         return mat; // return the mat with rectangles drawn
     }
 
-    public TeamPropLocation getLocation() {
+    public boolean getLocation() {
         return this.isTeamPropHere;
     }
 }

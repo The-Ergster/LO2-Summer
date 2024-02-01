@@ -39,6 +39,7 @@ public class AutonomousMode extends OpMode {
     double endTime;
     public ElapsedTime timer = new ElapsedTime();
 
+
     public void init() {
         frontLeft = hardwareMap.get(DcMotor.class, "fl");
         frontRight = hardwareMap.get(DcMotor.class, "fr");
@@ -85,22 +86,22 @@ public class AutonomousMode extends OpMode {
         frontRight.setPower(frPower);
         backLeft.setPower(blPower);
         backRight.setPower(brPower);
-        
+
 
     }
 
-   public void driveWithTime(double y, double rx, double x, double time) {
-    switch (step){
+    public void driveWithTime(double y, double rx, double x, double time) {
+        switch (step) {
             case (0):
-                driveOmni(y,rx,x);
+                driveOmni(y, rx, x);
                 delayedStop(time);
                 break;
             case (1):
                 stopRobot();
-            break;
+                break;
         }
     }
-        
+
     public void stopRobot() {
         frontLeft.setPower(0);
         frontRight.setPower(0);
@@ -109,54 +110,66 @@ public class AutonomousMode extends OpMode {
     }
 
     public void placePurplePixel() {
-         switch (step){
+        switch (step) {
             case (0):
-                driveOmni(0.5,00,0);
+                driveOmni(0.5, 00, 0);
                 delayedStop(1500);
                 break;
             case (1):
-                driveOmni(-0.5,0,-0);
+                driveOmni(-0.5, 0, -0);
                 delayedStop(15000);
                 break;
+        }
     }
 
 
-    @Override
-    public void loop() {
-        // Initialize the camera
-        this.webcam = new Webcam(this.hardwareMap, "Webcam");
-        Webcam camera = hardwareMap.get(Webcam.class, "Webcam 1");
-        // int cameraMonitorViewId = hardwareMap.appContext.getResources().getIdentifier("cameraMonitorViewId", "id", hardwareMap.appContext.getPackageName());
-        phoneCam = OpenCvCameraFactory.getInstance().createInternalCamera(OpenCvInternalCamera.CameraDirection.BACK, cameraMonitorViewId);
-        // Connect to the camera
-        phoneCam.openCameraDevice();
-        // Use the TeamPropDetector pipeline
-        // processFrame() will be called to process the frame
-        phoneCam.setPipeline(detector);
-        // Remember to change the camera rotation
-        phoneCam.startStreaming(width, height, OpenCvCameraRotation.SIDEWAYS_LEFT);
+        public void loop () {
+            int width = 320;
+            int height = 240;
+            OpenCvCamera camera;
+            TeamPropDetector detector = new TeamPropDetector(width);
+            // Initialize the camera
+//        this.webcam = new Webcam(this.hardwareMap, "Webcam");
+            camera = OpenCvCameraFactory.getInstance().createInternalCamera(OpenCvInternalCamera.CameraDirection.FRONT);
 
-        //...
+            // Connect to the camera
+            camera.openCameraDevice();
+            camera.openCameraDeviceAsync(new OpenCvCamera.AsyncCameraOpenListener() {
+                @Override
+                public void onOpened() {
+                    camera.startStreaming(1920, 1080, OpenCvCameraRotation.UPRIGHT);
+                }
 
-       TeamPropDetector.TeamPropLocation isTeamPropHere = detector.getLocation();
-       if (isTeamPropHere) {
-           placePurplePixel();
-       } else {
-           driveWithTime(0,0,0.5,1000)
-           // check for team prop in front of robot
-           TeamPropDetector.TeamPropLocation isTeamPropHere = detector.getLocation();
-           if (isTeamPropHere) {
-              placePurplePixel();
-           } else {
-               // we assume it's in this third position, if it isn't in the other two.
-               driveWithTime(0,0,-0.5,2000)
-               placePurplePixel();
-           }
+                @Override
+                public void onError(int errorCode) {
+
+                }
+
+            });
+
+            // Use the TeamPropDetector pipeline
+            // processFrame() will be called to process the frame
+            camera.setPipeline(detector);
+
+            //...
+
+            TeamPropDetector.isTeamPropHere = detector.getLocation();
+            if (TeamPropDetector.isTeamPropHere) {
+                placePurplePixel();
+            } else {
+                driveWithTime(0, 0, 0.5, 1000);
+                // check for team prop in front of robot
+                TeamPropDetector.isTeamPropHere = detector.getLocation();
+                if (TeamPropDetector.isTeamPropHere) {
+                    placePurplePixel();
+                } else {
+                    // we assume it's in this third position, if it isn't in the other two.
+                    driveWithTime(0, 0, -0.5, 2000);
+                    placePurplePixel();
+                }
 
 
-
-        
-        // add an if statement about location here, moving differently depending on the location
+                // add an if statement about location here, moving differently depending on the location
       /*  switch (step){
             case (0):
                 driveOmni(0,00,0);
@@ -185,6 +198,6 @@ public class AutonomousMode extends OpMode {
             telemetry.addLine("Recognized object: ", + label);
             telemerty.addLine("Confidence: " + confidence);
 */
+            }
         }
     }
-
