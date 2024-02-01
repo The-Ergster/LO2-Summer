@@ -80,10 +80,14 @@ public class TeamPropDetector extends OpenCvPipeline {
         boolean right = false; // "" "" on the right side
         
         for (int i = 0; i != boundRect.length; i++) {
+            /*
             if (boundRect[i].x < left_x)
                 left = true;
             if (boundRect[i].x + boundRect[i].width > right_x)
                 right = true;
+           */
+            if (boundRect[i].x + boundRect[i].width < right_x && boundRect[i].x + boundRect[i].width > left)
+                middle = true;
             // draw red bounding rectangles on mat
             // the mat has been converted to HSV so we need to use HSV as well
             Imgproc.rectangle(mat, boundRect[i], new Scalar(0.5, 76.9, 89.8));
@@ -94,7 +98,11 @@ public class TeamPropDetector extends OpenCvPipeline {
         else location = TeamPropLocation.NONE;
         */
         // now I need to code something that detects whether the team prop is in the middle
-
+        if (middle) {
+            isTeamPropHere = true;
+        } else {
+            isTeamPropHere = false;
+        }
         return mat; // return the mat with rectangles drawn
     }
 
