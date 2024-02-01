@@ -46,7 +46,7 @@ public class TeamPropDetector extends OpenCvPipeline {
         Scalar highHSV = new Scalar(30, 255, 255); // higher bound HSV for yellow
         Mat thresh = new Mat();
 
-        // We'll get a black and white image. The white regions represent the regular stones.
+        // gets a black & white image
         // inRange(): thresh[i][j] = {255,255,255} if mat[i][i] is within the range
         // Core.inRange(mat, lowHSV, highHSV, thresh);
 
