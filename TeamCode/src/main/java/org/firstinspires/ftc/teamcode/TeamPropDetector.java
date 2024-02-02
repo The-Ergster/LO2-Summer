@@ -1,5 +1,6 @@
 package org.firstinspires.ftc.teamcode;
 
+import org.opencv.core.Core;
 import org.opencv.core.Mat;
 import org.opencv.core.MatOfPoint;
 import org.opencv.core.MatOfPoint2f;
@@ -49,7 +50,7 @@ public class TeamPropDetector extends OpenCvPipeline {
 
         // gets a black & white image
         // inRange(): thresh[i][j] = {255,255,255} if mat[i][i] is within the range
-        // Core.inRange(mat, lowHSV, highHSV, thresh);
+        Core.inRange(mat, lowHSV, highHSV, thresh);
 
         // Use Canny Edge Detection to find edges
         Mat edges = new Mat();
