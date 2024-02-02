@@ -66,6 +66,18 @@ public class blueFar extends OpMode {
         backLeft.setPower(0);
         backRight.setPower(0);
     }
+    public void placePurplePixel() {
+        switch (step) {
+            case (0):
+                driveOmni(0.5, 00, 0);
+                delayedStop(1500);
+                break;
+            case (1):
+                driveOmni(-0.5, 0, -0);
+                delayedStop(15000);
+                break;
+        }
+    }
 
 
     @Override
