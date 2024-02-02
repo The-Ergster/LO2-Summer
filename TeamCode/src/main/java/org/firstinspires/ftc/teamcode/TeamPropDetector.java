@@ -13,7 +13,7 @@ import java.util.List;
 
 public class TeamPropDetector extends OpenCvPipeline {
 
-    private int width; // width of the image
+    private static int width; // width of the image
     public static boolean isTeamPropHere;
 
     /**

@@ -39,7 +39,6 @@ public class AutonomousMode extends OpMode {
     double endTime;
     public ElapsedTime timer = new ElapsedTime();
 
-
     public void init() {
         frontLeft = hardwareMap.get(DcMotor.class, "fl");
         frontRight = hardwareMap.get(DcMotor.class, "fr");
@@ -123,7 +122,7 @@ public class AutonomousMode extends OpMode {
     }
 
 
-        public void loop () {
+        public void loop() {
             int width = 320;
             int height = 240;
             OpenCvCamera camera;
@@ -200,4 +199,5 @@ public class AutonomousMode extends OpMode {
 */
             }
         }
+
     }
