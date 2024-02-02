@@ -99,7 +99,7 @@ public class blueClose extends OpMode {
                 break;
             case (1):
                 driveOmni(-0.5, 0, -0);
-                delayedStop(15000);
+                delayedStop(1500);
                 break;
         }
     }
