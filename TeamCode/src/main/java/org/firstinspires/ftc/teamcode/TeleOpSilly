@@ -18,6 +18,18 @@ public class TeleopSilly extends OpMode {
     private double armPosition;
     private CRServo droneLauncher;
 
+    public void delayedStop(double delay){
+        if (delayStep!=step){
+            delayStep=step;
+            endTime=timer.milliseconds()+delay;
+
+        }
+        if (timer.milliseconds()>=endTime) {
+            stopRobot();
+            step++;
+        }
+        //stops
+    }
 
     @Override
     public void init() {
@@ -94,15 +106,29 @@ public class TeleopSilly extends OpMode {
         driveOmni(-0.5*gamepad1.left_stick_y, 0.5*gamepad1.right_stick_x, 0.5*gamepad1.left_stick_x);
 
         } else if (gamepad1.x) {
-        // rotate 90 degrees left
-
+        // rotate 90 degrees left        
+        
+        switch (step){
+            case (0):
+                driveOmni(0,-1,0);
+                delayedStop(1000);
+                break;
+        }
+        
         } else if (gamepad1.b) {
         // rotate 90 degrees right
-
+        
+        switch (step){
+            case (0):
+                driveOmni(0,1,0);
+                delayedStop(1000);
+                break;
+        }
         } else {
         driveOmni(-0.8*gamepad1.left_stick_y, 0.8*gamepad1.right_stick_x, 0.8*gamepad1.left_stick_x);
 //        clawControl(gamepad1.a, gamepad1.b);
         }
         armControl(gamepad1.left_bumper, gamepad1.right_bumper);
+
     }
 }
