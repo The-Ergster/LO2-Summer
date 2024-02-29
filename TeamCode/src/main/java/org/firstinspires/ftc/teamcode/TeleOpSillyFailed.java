@@ -4,13 +4,11 @@ import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.CRServo;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
-import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 
 @TeleOp
-public class TeleOpSilly extends OpMode {
+public class TeleOpSillyFailed extends OpMode {
     private DcMotor frontLeft;
     private DcMotor frontRight;
     private DcMotor backRight;
@@ -104,40 +102,40 @@ public class TeleOpSilly extends OpMode {
 
         droneLauncher.setPower(clawPower);
 
-    }
+}
 
-
+    
     @Override
     public void loop() {
         if (gamepad1.y) {
-            // dash
-            driveOmni(-1*gamepad1.left_stick_y, 1*gamepad1.right_stick_x, 1*gamepad1.left_stick_x);
+        // dash
+        driveOmni(-1*gamepad1.left_stick_y, 1*gamepad1.right_stick_x, 1*gamepad1.left_stick_x);
 
         } else if (gamepad1.a) {
-            // "crouch"
-            driveOmni(-0.5*gamepad1.left_stick_y, 0.5*gamepad1.right_stick_x, 0.5*gamepad1.left_stick_x);
+        // "crouch"
+        driveOmni(-0.5*gamepad1.left_stick_y, 0.5*gamepad1.right_stick_x, 0.5*gamepad1.left_stick_x);
 
         } else if (gamepad1.x) {
-            // rotate 90 degrees left
-
-            switch (step){
-                case (0):
-                    driveOmni(0,-1,0);
-                    delayedStop(1000);
-                    break;
-            }
-
+        // rotate 90 degrees left        
+        
+        switch (step){
+            case (0):
+                driveOmni(0,-1,0);
+                delayedStop(1000);
+                break;
+        }
+        
         } else if (gamepad1.b) {
-            // rotate 90 degrees right
-
-            switch (step){
-                case (0):
-                    driveOmni(0,1,0);
-                    delayedStop(1000);
-                    break;
-            }
+        // rotate 90 degrees right
+        
+        switch (step){
+            case (0):
+                driveOmni(0,1,0);
+                delayedStop(1000);
+                break;
+        }
         } else {
-            driveOmni(-0.8*gamepad1.left_stick_y, 0.8*gamepad1.right_stick_x, 0.8*gamepad1.left_stick_x);
+        driveOmni(-0.8*gamepad1.left_stick_y, 0.8*gamepad1.right_stick_x, 0.8*gamepad1.left_stick_x);
 //        clawControl(gamepad1.a, gamepad1.b);
         }
         armControl(gamepad1.left_bumper, gamepad1.right_bumper);
