@@ -35,15 +35,15 @@ public class RedTeamPropDetector extends OpenCvPipeline {
         Imgproc.cvtColor(input, mat, Imgproc.COLOR_RGB2HSV);
 
         // if something is wrong, we assume there's no team prop
-        if (mat.empty()) {
+         if (mat.empty()) {
             // say that prop is not here
             return input;
         }
 
         // NOTE: In OpenCV's implementation, Hue values are half the real value
         // red
-        // note: Hues (0 & 15) are half of actual hues (0 & 15)
-        Scalar lowHSV = new Scalar(0, 50, 40); // lower bound HSV
+        // note: Hues (0 & 15) are half of actual hues (0 & 30)
+        Scalar lowHSV = new Scalar(0, 45, 40); // lower bound HSV
         Scalar highHSV = new Scalar(15, 90, 85); // higher bound HSV
         Mat thresh = new Mat();
 

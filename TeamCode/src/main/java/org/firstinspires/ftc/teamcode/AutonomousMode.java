@@ -111,12 +111,14 @@ public class AutonomousMode extends OpMode {
     public void placePurplePixel() {
         switch (step) {
             case (0):
-                driveOmni(0.5, 00, 0);
+                // switched x & y
+                driveOmni(0, 00, 0.5);
                 delayedStop(1500);
                 break;
             case (1):
-                driveOmni(-0.5, 0, -0);
-                delayedStop(1500);
+                // switched x & y
+                driveOmni(0, 0, -0.5);
+                delayedStop(15000);
                 break;
         }
     }
@@ -126,7 +128,7 @@ public class AutonomousMode extends OpMode {
             int width = 320;
             int height = 240;
             OpenCvCamera camera;
-            TeamPropDetector detector = new TeamPropDetector(width);
+            RedTeamPropDetector detector = new RedTeamPropDetector(width);
             // Initialize the camera
 //        this.webcam = new Webcam(this.hardwareMap, "Webcam");
             camera = OpenCvCameraFactory.getInstance().createInternalCamera(OpenCvInternalCamera.CameraDirection.FRONT);
@@ -152,18 +154,20 @@ public class AutonomousMode extends OpMode {
 
             //...
 
-            TeamPropDetector.isTeamPropHere = detector.getLocation();
-            if (TeamPropDetector.isTeamPropHere) {
+            RedTeamPropDetector.isTeamPropHere = detector.getLocation();
+            if (RedTeamPropDetector.isTeamPropHere) {
                 placePurplePixel();
             } else {
-                driveWithTime(0, 0, 0.5, 1000);
+                // switch x & y
+                driveWithTime(0.5, 0, 0, 1000);
                 // check for team prop in front of robot
-                TeamPropDetector.isTeamPropHere = detector.getLocation();
-                if (TeamPropDetector.isTeamPropHere) {
+                RedTeamPropDetector.isTeamPropHere = detector.getLocation();
+                if (RedTeamPropDetector.isTeamPropHere) {
                     placePurplePixel();
                 } else {
                     // we assume it's in this third position, if it isn't in the other two.
-                    driveWithTime(0, 0, -0.5, 2000);
+                   // switch x & y
+                    driveWithTime(-0.5, 0, 0, 2000);
                     placePurplePixel();
                 }
 

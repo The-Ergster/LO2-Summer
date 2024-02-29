@@ -73,10 +73,10 @@ public class blueClose extends OpMode {
 
     public void driveOmni(double y, double rx, double x) {
         double maxValue = Math.max(Math.abs(y) + Math.abs(x) + Math.abs(rx), 1);
-        double flPower = (y + x + rx) / maxValue;
-        double blPower = (y - x + rx) / maxValue;
-        double frPower = (y - x - rx) / maxValue;
-        double brPower = (y + x - rx) / maxValue;
+        double flPower = (x + y + rx) / maxValue;
+        double blPower = (x - y + rx) / maxValue;
+        double frPower = (x - y - rx) / maxValue;
+        double brPower = (x + y - rx) / maxValue;
 
         frontLeft.setPower(flPower);
         frontRight.setPower(frPower);
