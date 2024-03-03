@@ -19,6 +19,7 @@ import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
 import org.openftc.easyopencv.OpenCvInternalCamera;
+import org.firstinspires.ftc.robotcore.internal.opmode.TelemetryImpl;
 
 import java.util.List;
 
@@ -111,14 +112,12 @@ public class AutonomousMode extends OpMode {
     public void placePurplePixel() {
         switch (step) {
             case (0):
-                // switched x & y
-                driveOmni(0, 00, 0.5);
+                driveOmni(0.5, 00, 0);
                 delayedStop(1500);
                 break;
             case (1):
-                // switched x & y
-                driveOmni(0, 0, -0.5);
-                delayedStop(15000);
+                driveOmni(-0.5, 0, -0);
+                delayedStop(1500);
                 break;
         }
     }
@@ -128,7 +127,7 @@ public class AutonomousMode extends OpMode {
             int width = 320;
             int height = 240;
             OpenCvCamera camera;
-            RedTeamPropDetector detector = new RedTeamPropDetector(width);
+            TeamPropDetector detector = new TeamPropDetector(width);
             // Initialize the camera
 //        this.webcam = new Webcam(this.hardwareMap, "Webcam");
             camera = OpenCvCameraFactory.getInstance().createInternalCamera(OpenCvInternalCamera.CameraDirection.FRONT);
@@ -154,20 +153,24 @@ public class AutonomousMode extends OpMode {
 
             //...
 
-            RedTeamPropDetector.isTeamPropHere = detector.getLocation();
-            if (RedTeamPropDetector.isTeamPropHere) {
+            TeamPropDetector.isTeamPropHere = detector.getLocation();
+            if (TeamPropDetector.isTeamPropHere) {
+                telemetry.addLine("Found in middle");
+                telemetry.update();
                 placePurplePixel();
             } else {
-                // switch x & y
-                driveWithTime(0.5, 0, 0, 1000);
+                driveWithTime(0, 0, 0.5, 1000);
                 // check for team prop in front of robot
-                RedTeamPropDetector.isTeamPropHere = detector.getLocation();
-                if (RedTeamPropDetector.isTeamPropHere) {
+                TeamPropDetector.isTeamPropHere = detector.getLocation();
+                if (TeamPropDetector.isTeamPropHere) {
+                    telemetry.addLine("Found on right");
+                    telemetry.update();
                     placePurplePixel();
                 } else {
                     // we assume it's in this third position, if it isn't in the other two.
-                   // switch x & y
-                    driveWithTime(-0.5, 0, 0, 2000);
+                    telemetry.addLine("Assumed on left");
+                    telemetry.update();
+                    driveWithTime(0, 0, -0.5, 2000);
                     placePurplePixel();
                 }
 
