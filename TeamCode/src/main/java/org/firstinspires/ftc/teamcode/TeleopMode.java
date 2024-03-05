@@ -22,7 +22,6 @@ public class TeleopMode extends OpMode {
 public TelemetryImpl telemetry;
 
 
-
     @Override
     public void init() {
         telemetry = new TelemetryImpl(this);
@@ -37,15 +36,14 @@ public TelemetryImpl telemetry;
 
     public void driveOmni(double y, double rx, double x){
         double maxValue = Math.max(Math.abs(y) + Math.abs(x) + Math.abs(rx), 1);
-        // note: fl motor is wonky and therefore y backwards
-        double flPower = (-y - x + rx) / maxValue;
+        double flPower = (y + x + rx) / maxValue;
         double blPower = (y - x + rx) / maxValue;
         double frPower = (y - x - rx) / maxValue;
         double brPower = (y + x - rx) / maxValue;
 
-        frontLeft.setPower(flPower);
+        frontLeft.setPower(-flPower);
         frontRight.setPower(frPower);
-        backLeft.setPower(blPower);
+        backLeft.setPower(-blPower);
         backRight.setPower(brPower);
     }
     /*
@@ -104,7 +102,7 @@ public TelemetryImpl telemetry;
               telemetry.addLine("b");
           } else if(gamepad1.a) {
               driveOmni(-0.1,0,0);
-            telemetry.addLine("a");
+              telemetry.addLine("a");
           } else {
             driveOmni(-1*gamepad1.left_stick_y, 1*gamepad1.right_stick_x, 1*gamepad1.left_stick_x);
             telemetry.addLine("y: -1*" + gamepad1.left_stick_y);
