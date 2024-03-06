@@ -119,16 +119,9 @@ public class AutonomousMode extends OpMode {
     }
 
     public void placePurplePixel() {
-        switch (step) {
-            case (0):
-                driveOmni(0.5, 00, 0);
-                delayedStop(3000);
-                break;
-            case (1):
-                driveOmni(-0.5, 0, -0);
-                delayedStop(3000);
-                break;
-        }
+        driveForTime(0.5, 0, 0, 1000);
+        driveForTime(-0.5, 0, 0, 1000);
+
     }
 
 
