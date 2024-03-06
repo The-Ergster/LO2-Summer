@@ -73,15 +73,16 @@ public class blueClose extends OpMode {
 
     public void driveOmni(double y, double rx, double x) {
         double maxValue = Math.max(Math.abs(y) + Math.abs(x) + Math.abs(rx), 1);
-        double flPower = (x + y + rx) / maxValue;
-        double blPower = (x - y + rx) / maxValue;
-        double frPower = (x - y - rx) / maxValue;
-        double brPower = (x + y - rx) / maxValue;
+        double flPower = (y + x + rx) / maxValue;
+        double blPower = (y - x + rx) / maxValue;
+        double frPower = (y - x - rx) / maxValue;
+        double brPower = (y + x - rx) / maxValue;
 
-        frontLeft.setPower(flPower);
+        frontLeft.setPower(-flPower);
         frontRight.setPower(frPower);
-        backLeft.setPower(blPower);
+        backLeft.setPower(-blPower);
         backRight.setPower(brPower);
+
     }
 
     public void stopRobot() {
@@ -135,7 +136,7 @@ public class blueClose extends OpMode {
 
         //...
 
-        TeamPropDetector.isTeamPropHere = detector.getLocation();
+       /* TeamPropDetector.isTeamPropHere = detector.getLocation();
         if (TeamPropDetector.isTeamPropHere) {
             placePurplePixel();
         } else {
@@ -150,6 +151,8 @@ public class blueClose extends OpMode {
                 placePurplePixel();
             }
 
+        */
+
             switch (step) {
                 case (0):
                     driveOmni(0, 00, -0.5);
@@ -159,4 +162,4 @@ public class blueClose extends OpMode {
         }
     }
 
-}
+

@@ -47,17 +47,18 @@ public class blueFar extends OpMode {
 //        this.webcam.open(new ColorCapturePipeline());
 //        private AbstractResultCvPipeline<?> pipeline;
     }
-    public void driveOmni(double y, double rx, double x){
+    public void driveOmni(double y, double rx, double x) {
         double maxValue = Math.max(Math.abs(y) + Math.abs(x) + Math.abs(rx), 1);
         double flPower = (y + x + rx) / maxValue;
         double blPower = (y - x + rx) / maxValue;
         double frPower = (y - x - rx) / maxValue;
         double brPower = (y + x - rx) / maxValue;
 
-        frontLeft.setPower(flPower);
+        frontLeft.setPower(-flPower);
         frontRight.setPower(frPower);
-        backLeft.setPower(blPower);
+        backLeft.setPower(-blPower);
         backRight.setPower(brPower);
+
     }
 
     public void stopRobot(){

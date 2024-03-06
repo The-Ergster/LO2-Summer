@@ -19,7 +19,6 @@ import org.openftc.easyopencv.OpenCvCamera;
 import org.openftc.easyopencv.OpenCvCameraFactory;
 import org.openftc.easyopencv.OpenCvCameraRotation;
 import org.openftc.easyopencv.OpenCvInternalCamera;
-import org.firstinspires.ftc.robotcore.internal.opmode.TelemetryImpl;
 
 import java.util.List;
 
@@ -82,12 +81,22 @@ public class AutonomousMode extends OpMode {
         double frPower = (y - x - rx) / maxValue;
         double brPower = (y + x - rx) / maxValue;
 
-        frontLeft.setPower(flPower);
+        frontLeft.setPower(-flPower);
         frontRight.setPower(frPower);
-        backLeft.setPower(blPower);
+        backLeft.setPower(-blPower);
         backRight.setPower(brPower);
 
 
+    }
+
+    public void driveForTime(double x, double y, double rx, long timeMs) {
+        driveOmni(y, rx, x);
+        try {
+            Thread.sleep(timeMs);
+        } catch (InterruptedException e) {
+
+        }
+        stopRobot();
     }
 
     public void driveWithTime(double y, double rx, double x, double time) {
@@ -113,11 +122,11 @@ public class AutonomousMode extends OpMode {
         switch (step) {
             case (0):
                 driveOmni(0.5, 00, 0);
-                delayedStop(1500);
+                delayedStop(3000);
                 break;
             case (1):
                 driveOmni(-0.5, 0, -0);
-                delayedStop(1500);
+                delayedStop(3000);
                 break;
         }
     }
@@ -127,7 +136,7 @@ public class AutonomousMode extends OpMode {
             int width = 320;
             int height = 240;
             OpenCvCamera camera;
-            TeamPropDetector detector = new TeamPropDetector(width);
+            RedTeamPropDetector detector = new RedTeamPropDetector(width);
             // Initialize the camera
 //        this.webcam = new Webcam(this.hardwareMap, "Webcam");
             camera = OpenCvCameraFactory.getInstance().createInternalCamera(OpenCvInternalCamera.CameraDirection.FRONT);
@@ -145,7 +154,8 @@ public class AutonomousMode extends OpMode {
 
                 }
 
-            });
+            });                TeamPropDetector.isTeamPropHere = detector.getLocation();
+
 
             // Use the TeamPropDetector pipeline
             // processFrame() will be called to process the frame
@@ -153,27 +163,22 @@ public class AutonomousMode extends OpMode {
 
             //...
 
+            driveForTime(0,-0.5,0,1000);
             TeamPropDetector.isTeamPropHere = detector.getLocation();
+
             if (TeamPropDetector.isTeamPropHere) {
-                telemetry.addLine("Found in middle");
-                telemetry.update();
                 placePurplePixel();
             } else {
-                driveWithTime(0, 0, 0.5, 1000);
+                driveForTime(0.5, 0, 0, 1000);
                 // check for team prop in front of robot
                 TeamPropDetector.isTeamPropHere = detector.getLocation();
                 if (TeamPropDetector.isTeamPropHere) {
-                    telemetry.addLine("Found on right");
-                    telemetry.update();
                     placePurplePixel();
                 } else {
                     // we assume it's in this third position, if it isn't in the other two.
-                    telemetry.addLine("Assumed on left");
-                    telemetry.update();
-                    driveWithTime(0, 0, -0.5, 2000);
+                    driveForTime(-0.5, 0, 0, 2000);
                     placePurplePixel();
                 }
-
 
                 // add an if statement about location here, moving differently depending on the location
       /*  switch (step){
