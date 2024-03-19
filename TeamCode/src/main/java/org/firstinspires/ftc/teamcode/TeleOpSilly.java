@@ -9,6 +9,8 @@ import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 
+
+
 @TeleOp
 public class TeleOpSilly extends OpMode {
     private DcMotor frontLeft;
@@ -61,9 +63,9 @@ public class TeleOpSilly extends OpMode {
         double frPower = (y - x - rx) / maxValue;
         double brPower = (y + x - rx) / maxValue;
 
-        frontLeft.setPower(flPower);
+        frontLeft.setPower(-flPower);
         frontRight.setPower(frPower);
-        backLeft.setPower(blPower);
+        backLeft.setPower(-blPower);
         backRight.setPower(brPower);
     }
     /*
@@ -129,7 +131,6 @@ public class TeleOpSilly extends OpMode {
 
         } else if (gamepad1.b) {
             // rotate 90 degrees right
-
             switch (step){
                 case (0):
                     driveOmni(0,1,0);

@@ -6,6 +6,7 @@ import vision.AbstractResultCvPipeline;
 import vision.Webcam;
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 // import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
@@ -27,6 +28,11 @@ public class AutonomousMode extends OpMode {
     //@Override
 // This below here is the code for the actual claw
 // driveOmni(-1*gamepad1.left_stick_y, 1*gamepad1.right_stick_x, 1*gamepad1.left_stick_x);
+    OpenCvCamera phoneCam;
+//    public void runOpMode() throws InternalException {
+ //       int cameraMonitorViewId = hardwareMap.appContext();
+
+    //}
     private DcMotor frontLeft;
     private DcMotor frontRight;
     private DcMotor backRight;
@@ -48,7 +54,9 @@ public class AutonomousMode extends OpMode {
         int width = 320;
         int height = 240;
         TeamPropDetector detector = new TeamPropDetector(width);
-        OpenCvCamera phoneCam;
+
+
+
 
 /*
         VisionPortal visionportal = VisionPortal.easyCreateWithDefeualts(camera, visionProcessors);
@@ -128,8 +136,8 @@ public class AutonomousMode extends OpMode {
         public void loop() {
             int width = 320;
             int height = 240;
+            TeamPropDetector detector = new TeamPropDetector(width);
             OpenCvCamera camera;
-            RedTeamPropDetector detector = new RedTeamPropDetector(width);
             // Initialize the camera
 //        this.webcam = new Webcam(this.hardwareMap, "Webcam");
             camera = OpenCvCameraFactory.getInstance().createInternalCamera(OpenCvInternalCamera.CameraDirection.FRONT);
@@ -147,7 +155,8 @@ public class AutonomousMode extends OpMode {
 
                 }
 
-            });                TeamPropDetector.isTeamPropHere = detector.getLocation();
+            });
+            //TeamPropDetector.isTeamPropHere = detector.getLocation();
 
 
             // Use the TeamPropDetector pipeline

@@ -60,10 +60,10 @@ public TelemetryImpl telemetry;
         //armUp = false;
         double armPower;
         if (armUp == true) {
-            armPower = 1;
+            armPower = .5;
             armPosition++;
         } else if (armDown == true) {
-            armPower = -.8;
+            armPower = -.5;
             armPosition--;
         } else {
             armPower = 0;
@@ -111,7 +111,7 @@ public TelemetryImpl telemetry;
             telemetry.addLine("moving");
           }
           telemetry.update();
-//        armControl(gamepad1.left_bumper, gamepad1.right_bumper);
+        armControl(gamepad1.left_bumper, gamepad1.right_bumper);
 //        clawControl(gamepad1.a, gamepad1.b);
     }
 }
