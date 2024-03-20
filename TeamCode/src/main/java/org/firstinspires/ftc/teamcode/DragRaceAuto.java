@@ -30,6 +30,10 @@ public class DragRaceAuto extends OpMode {
     int delayStep=-1;
     double endTime;
     public ElapsedTime timer = new ElapsedTime();
+    NormalizedColorSensor colorSensor;
+
+    static final double WHITE_THRESHOLD = 0.5;  // spans between 0.0 - 1.0 from dark to light
+    static final double APPROACH_SPEED  = 0.25;
 
     public void delayedStop(double delay){
         if (delayStep!=step){
