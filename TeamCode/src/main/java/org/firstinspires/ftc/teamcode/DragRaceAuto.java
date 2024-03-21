@@ -9,6 +9,7 @@ import com.qualcomm.robotcore.hardware.NormalizedColorSensor;
 import com.qualcomm.robotcore.hardware.NormalizedRGBA;
 import com.qualcomm.robotcore.hardware.SwitchableLight;
 
+
 import vision.Webcam;
 // import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
@@ -23,6 +24,7 @@ public class DragRaceAuto extends OpMode {
     private DcMotor backLeft;
     // down there makes a webcam
 //    private Webcam webcam;
+    NormalizedColorSensor colorSensor;
 
     int step=0;
     int delayStep=-1;
@@ -47,7 +49,16 @@ public class DragRaceAuto extends OpMode {
         frontRight = hardwareMap.get(DcMotor.class, "fr");
         backLeft = hardwareMap.get(DcMotor.class, "bl");
         backRight = hardwareMap.get(DcMotor.class, "br");
+        colorSensor = hardwareMap.get(NormalizedColorSensor.class, "sensor_color");
     }
+
+    double getBrightness() {
+        NormalizedRGBA colors = colorSensor.getNormalizedColors();
+        telemetry.addLine(String.valueOf(colors.alpha));
+        telemetry.update();
+        return colors.alpha;
+    }
+
     public void driveOmni(double y, double rx, double x) {
         double maxValue = Math.max(Math.abs(y) + Math.abs(x) + Math.abs(rx), 1);
         double flPower = (y + x + rx) / maxValue;
@@ -71,11 +82,15 @@ public class DragRaceAuto extends OpMode {
 
     @Override
     public void loop() {
-//        driveOmni(1, 00, 0);
-/*        if () {
-            stopRobot();
+        colorSensor.setGain(15);
+        double color = 0;
+        while (color < 2 || color > 3) {
+            driveOmni(0.2, 00, 0);
+            color = getBrightness();
         }
- */
+        stopRobot();
+
+
 
     }
 }
