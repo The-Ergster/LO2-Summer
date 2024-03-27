@@ -9,13 +9,14 @@ import com.qualcomm.robotcore.hardware.NormalizedColorSensor;
 import com.qualcomm.robotcore.hardware.NormalizedRGBA;
 import com.qualcomm.robotcore.hardware.SwitchableLight;
 
+
 import vision.Webcam;
 // import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 @Autonomous
 public class DragRaceAuto extends OpMode {
     //@Override
-// This below here is the code for the actual claw
+    // This below here is the code for the actual claw
 // driveOmni(-1*gamepad1.left_stick_y, 1*gamepad1.right_stick_x, 1*gamepad1.left_stick_x);
     private DcMotor frontLeft;
     private DcMotor frontRight;
@@ -23,16 +24,12 @@ public class DragRaceAuto extends OpMode {
     private DcMotor backLeft;
     // down there makes a webcam
 //    private Webcam webcam;
+    NormalizedColorSensor colorSensor;
 
     int step=0;
     int delayStep=-1;
     double endTime;
     public ElapsedTime timer = new ElapsedTime();
-    NormalizedColorSensor colorSensor;
-
-    static final double WHITE_THRESHOLD = 0.5;  // spans between 0.0 - 1.0 from dark to light
-    static final double APPROACH_SPEED  = 0.25;
-    
 
     public void delayedStop(double delay){
         if (delayStep!=step){
@@ -54,7 +51,21 @@ public class DragRaceAuto extends OpMode {
         backRight = hardwareMap.get(DcMotor.class, "br");
         colorSensor = hardwareMap.get(NormalizedColorSensor.class, "sensor_color");
     }
-    
+
+    float getBrightness() {
+        NormalizedRGBA colors;
+        colors = colorSensor.getNormalizedColors();
+        //telemetry.addLine(colors.alpha);
+        telemetry.addLine()
+                .addData("Red", "%.3f", colors.red)
+                .addData("Green", "%.3f", colors.green)
+                .addData("Blue", "%.3f", colors.blue);
+        telemetry.update();
+        float CAlpha = colors.alpha;
+
+        return CAlpha;
+    }
+
     public void driveOmni(double y, double rx, double x) {
         double maxValue = Math.max(Math.abs(y) + Math.abs(x) + Math.abs(rx), 1);
         double flPower = (y + x + rx) / maxValue;
@@ -78,11 +89,13 @@ public class DragRaceAuto extends OpMode {
 
     @Override
     public void loop() {
-//        driveOmni(1, 00, 0);
-/*        if () {
-            stopRobot();
+        colorSensor.setGain(15);
+        float color = 0;
+        color = getBrightness();
+        while (color < 2 || color > 3) {
+            driveOmni(0.2, 00, 0);
+            color = getBrightness();
         }
- */
-
+        stopRobot();
     }
 }
