@@ -1,12 +1,13 @@
 package org.firstinspires.ftc.teamcode;
 
+import android.annotation.SuppressLint;
+
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.hardware.LightSensor;
-import com.qualcomm.robotcore.hardware.NormalizedColorSensor;
-import com.qualcomm.robotcore.hardware.NormalizedRGBA;
 import com.qualcomm.robotcore.hardware.SwitchableLight;
 
 
@@ -24,7 +25,7 @@ public class DragRaceAuto extends OpMode {
     private DcMotor backLeft;
     // down there makes a webcam
 //    private Webcam webcam;
-    NormalizedColorSensor colorSensor;
+    ColorSensor colorSensor;
 
     int step=0;
     int delayStep=-1;
@@ -49,21 +50,20 @@ public class DragRaceAuto extends OpMode {
         frontRight = hardwareMap.get(DcMotor.class, "fr");
         backLeft = hardwareMap.get(DcMotor.class, "bl");
         backRight = hardwareMap.get(DcMotor.class, "br");
-        colorSensor = hardwareMap.get(NormalizedColorSensor.class, "sensor_color");
+        colorSensor = hardwareMap.get(ColorSensor.class, "sensor_color");
     }
 
     float getBrightness() {
-        NormalizedRGBA colors;
-        colors = colorSensor.getNormalizedColors();
         //telemetry.addLine(colors.alpha);
+        float blue = colorSensor.blue() - colorSensor.green() - colorSensor.red();
         telemetry.addLine()
-                .addData("Red", "%.3f", colors.red)
-                .addData("Green", "%.3f", colors.green)
-                .addData("Blue", "%.3f", colors.blue);
+                .addData("Red", "%d", colorSensor.red())
+                .addData("Green", "%d", colorSensor.green())
+                .addData("Blue", "%d", colorSensor.blue());
+        telemetry.addLine(String.valueOf(blue));
         telemetry.update();
-        float CAlpha = colors.alpha;
 
-        return CAlpha;
+        return blue;
     }
 
     public void driveOmni(double y, double rx, double x) {
@@ -89,12 +89,12 @@ public class DragRaceAuto extends OpMode {
 
     @Override
     public void loop() {
-        colorSensor.setGain(15);
-        float color = 0;
-        color = getBrightness();
-        while (color < 2 || color > 3) {
-            driveOmni(0.2, 00, 0);
-            color = getBrightness();
+//        colorSensor.setGain(15);
+        float colorBlue = 0;
+        colorBlue = getBrightness();
+        while (colorBlue < -20) {
+            driveOmni(0.9, 00, 0);
+            colorBlue = getBrightness();
         }
         stopRobot();
     }
