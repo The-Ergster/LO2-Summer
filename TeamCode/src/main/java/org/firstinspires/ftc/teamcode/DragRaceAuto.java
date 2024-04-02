@@ -91,11 +91,31 @@ public class DragRaceAuto extends OpMode {
     public void loop() {
 //        colorSensor.setGain(15);
         float colorBlue = 0;
+        boolean hasStopped = false;
         colorBlue = getBrightness();
-        while (colorBlue < -20) {
-            driveOmni(0.9, 00, 0);
+        driveOmni(0.6, 00, 0);
+        while (colorBlue < -20 && !hasStopped) {
             colorBlue = getBrightness();
         }
+        hasStopped = true;
         stopRobot();
+        while (hasStopped) {
+            switch (step) {
+                case (0):
+                    driveOmni(1, 00, 0);
+                    telemetry.addLine("Has seen blue");
+                    telemetry.update();
+                    delayedStop(300);
+                    break;
+                case (1):
+                    try {
+                        Thread.sleep(1000);
+                        telemetry.addLine("Stopped");
+                        telemetry.update();
+                    } catch (InterruptedException e) {
+
+                    }
+            }
+        }
     }
 }
