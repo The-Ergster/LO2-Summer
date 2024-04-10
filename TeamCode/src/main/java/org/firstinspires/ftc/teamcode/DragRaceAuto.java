@@ -55,14 +55,13 @@ public class DragRaceAuto extends OpMode {
 
     float getBrightness() {
         //telemetry.addLine(colors.alpha);
-        float blue = colorSensor.blue() - colorSensor.green() - colorSensor.red();
+        float blue = colorSensor.blue() * 2 - colorSensor.green() - colorSensor.red();
         telemetry.addLine()
                 .addData("Red", "%d", colorSensor.red())
                 .addData("Green", "%d", colorSensor.green())
                 .addData("Blue", "%d", colorSensor.blue());
         telemetry.addLine(String.valueOf(blue));
         telemetry.update();
-
         return blue;
     }
 
@@ -93,8 +92,8 @@ public class DragRaceAuto extends OpMode {
         float colorBlue = 0;
         boolean hasStopped = false;
         colorBlue = getBrightness();
-        driveOmni(0.6, 00, 0);
-        while (colorBlue < -20 && !hasStopped) {
+        //driveOmni(0.65, 00, 0);
+        while (colorBlue < 160 && !hasStopped) {
             colorBlue = getBrightness();
         }
         hasStopped = true;
@@ -113,9 +112,11 @@ public class DragRaceAuto extends OpMode {
                         telemetry.addLine("Stopped");
                         telemetry.update();
                     } catch (InterruptedException e) {
-
                     }
             }
-        }
+       }
+ //*/
     }
+
 }
+
