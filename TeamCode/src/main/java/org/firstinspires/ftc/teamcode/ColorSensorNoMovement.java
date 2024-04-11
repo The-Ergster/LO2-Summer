@@ -1,21 +1,14 @@
 package org.firstinspires.ftc.teamcode;
 
-import android.annotation.SuppressLint;
-
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.ColorSensor;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.util.ElapsedTime;
-import com.qualcomm.robotcore.hardware.LightSensor;
-import com.qualcomm.robotcore.hardware.SwitchableLight;
-
-
-import vision.Webcam;
 // import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 
 @Autonomous
-public class DragRaceAuto extends OpMode {
+public class ColorSensorNoMovement extends OpMode {
     //@Override
     // This below here is the code for the actual claw
 // driveOmni(-1*gamepad1.left_stick_y, 1*gamepad1.right_stick_x, 1*gamepad1.left_stick_x);
@@ -55,7 +48,7 @@ public class DragRaceAuto extends OpMode {
 
     float getBrightness() {
         //telemetry.addLine(colors.alpha);
-        float blue = colorSensor.blue() * 2 - colorSensor.green() - colorSensor.red();
+        float blue = colorSensor.blue() * 3 - colorSensor.green() - colorSensor.red();
         telemetry.addLine()
                 .addData("Red", "%d", colorSensor.red())
                 .addData("Green", "%d", colorSensor.green())
@@ -92,30 +85,7 @@ public class DragRaceAuto extends OpMode {
         float colorBlue = 0;
         boolean hasStopped = false;
         colorBlue = getBrightness();
-        driveOmni(0.35, 00, 0);
-        while (colorBlue < 340 && !hasStopped) {
-            colorBlue = getBrightness();
-        }
-        hasStopped = true;
-        stopRobot();
-        while (hasStopped) {
-            switch (step) {
-                case (0):
-                    driveOmni(1, 00, 0);
-                    telemetry.addLine("Has seen blue");
-                    telemetry.update();
-                    delayedStop(300);
-                    break;
-                case (1):
-                    try {
-                        Thread.sleep(1000);
-                        telemetry.addLine("Stopped");
-                        telemetry.update();
-                    } catch (InterruptedException e) {
-                    }
-            }
-       }
- //*/
+
     }
 
 }
