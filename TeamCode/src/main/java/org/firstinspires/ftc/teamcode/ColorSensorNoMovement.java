@@ -48,7 +48,7 @@ public class ColorSensorNoMovement extends OpMode {
 
     float getBrightness() {
         //telemetry.addLine(colors.alpha);
-        float blue = colorSensor.blue() * 3 - colorSensor.green() - colorSensor.red();
+        float blue = (float) (colorSensor.blue() * 3 - colorSensor.green() - (1.5 * colorSensor.red()));
         telemetry.addLine()
                 .addData("Red", "%d", colorSensor.red())
                 .addData("Green", "%d", colorSensor.green())

@@ -53,16 +53,21 @@ public class DragRaceAuto extends OpMode {
         colorSensor = hardwareMap.get(ColorSensor.class, "sensor_color");
     }
 
-    float getBrightness() {
+    boolean getBrightness() {
         //telemetry.addLine(colors.alpha);
-        float blue = colorSensor.blue() * 2 - colorSensor.green() - colorSensor.red();
+        float blue = (float) (colorSensor.blue() * 3 - colorSensor.green() - (1.5 * colorSensor.red()));
         telemetry.addLine()
                 .addData("Red", "%d", colorSensor.red())
                 .addData("Green", "%d", colorSensor.green())
                 .addData("Blue", "%d", colorSensor.blue());
         telemetry.addLine(String.valueOf(blue));
         telemetry.update();
-        return blue;
+        if (colorSensor.blue() > 150 && colorSensor.blue() < 175 && colorSensor.red() < 85 && colorSensor.red() > 50 && colorSensor.green() > 100 && colorSensor.green() < 150) {
+            return true;
+        } else {
+            //return blue;
+            return false;
+        }
     }
 
     public void driveOmni(double y, double rx, double x) {
@@ -89,11 +94,11 @@ public class DragRaceAuto extends OpMode {
     @Override
     public void loop() {
 //        colorSensor.setGain(15);
-        float colorBlue = 0;
+        boolean colorBlue = true;
         boolean hasStopped = false;
         colorBlue = getBrightness();
         driveOmni(0.35, 00, 0);
-        while (colorBlue < 340 && !hasStopped) {
+        while (!colorBlue && !hasStopped) {
             colorBlue = getBrightness();
         }
         hasStopped = true;
