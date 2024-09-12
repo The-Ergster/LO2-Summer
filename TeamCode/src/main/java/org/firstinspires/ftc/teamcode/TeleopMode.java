@@ -15,13 +15,7 @@ public class TeleopMode extends OpMode {
     private DcMotor frontRight;
     private DcMotor backRight;
     private DcMotor backLeft;
-    //now new code
-    private DcMotor armMotor;
-    private double armPosition = 100;
-//    private CRServo droneLauncher;
-public TelemetryImpl telemetry;
-
-
+ 
     @Override
     public void init() {
         telemetry = new TelemetryImpl(this);
@@ -29,9 +23,6 @@ public TelemetryImpl telemetry;
         frontRight = hardwareMap.get(DcMotor.class, "fr");
         backLeft = hardwareMap.get(DcMotor.class, "bl");
         backRight = hardwareMap.get(DcMotor.class, "br");
-        armMotor = hardwareMap.get(DcMotor.class, "am");
-//        droneLauncher = hardwareMap.get(CRServo.class, "cs");
-        armPosition = 0;
     }
 
     public void driveOmni(double y, double rx, double x){
@@ -46,7 +37,7 @@ public TelemetryImpl telemetry;
         backLeft.setPower(-blPower);
         backRight.setPower(brPower);
     }
-    /*
+    
     public void driveRaw(double flPower, double frPower, double brPower, double blPower){
         //fl, fr, br, bl
         double[] motorCoefficients = {1,1,1,1};
@@ -55,63 +46,13 @@ public TelemetryImpl telemetry;
         backRight.setPower(motorCoefficients[2]*brPower);
         backLeft.setPower(motorCoefficients[3]*blPower);
     }
-     */
-    public void armControl(boolean armUp, boolean armDown) {
-        //armUp = false;
-        double armPower;
-        if (armUp == true) {
-            armPower = .5;
-            armPosition++;
-        } else if (armDown == true) {
-            armPower = -.5;
-            armPosition--;
-        } else {
-            armPower = 0;
-        }
+   
 
-        armMotor.setPower(armPower);
-    }
 
-    /*
-    public void droneControl(boolean clawOpen, boolean clawClose) {
-        clawClose = false;
-        double clawPower;
-        if (clawClose == true) {
-            clawPower = 1;
-        } else if (clawOpen == true) {
-            clawPower = -1;
-        } else {
-            clawPower = 0;
-        }
-
-        droneLauncher.setPower(clawPower);
 
 }
- */
-    
-    @Override
     public void loop() {
-        if (gamepad1.y){
-            driveOmni(0.1,0,0);
-            telemetry.addLine("y");
-        } else if (gamepad1.x) {
-              driveOmni(0,0,-0.1);
-            telemetry.addLine("x");
-          } else if (gamepad1.b) {
-              driveOmni(0, 0, 0.1);
-              telemetry.addLine("b");
-          } else if(gamepad1.a) {
-              driveOmni(-0.1,0,0);
-              telemetry.addLine("a");
-          } else {
             driveOmni(-1*gamepad1.left_stick_y, 1*gamepad1.right_stick_x, 1*gamepad1.left_stick_x);
-            telemetry.addLine("y: -1*" + gamepad1.left_stick_y);
-            telemetry.addLine("rx: " + gamepad1.right_stick_x);
-            telemetry.addLine("x: "+gamepad1.left_stick_x);
-            telemetry.addLine("moving");
-          }
-          telemetry.update();
-        armControl(gamepad1.left_bumper, gamepad1.right_bumper);
-//        clawControl(gamepad1.a, gamepad1.b);
+
     }
 }
