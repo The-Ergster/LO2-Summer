@@ -1,6 +1,7 @@
 //robotics code that does things
 package org.firstinspires.ftc.teamcode;
 
+import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
@@ -13,40 +14,15 @@ import org.firstinspires.ftc.robotcore.internal.opmode.TelemetryImpl;
 
 
 //defines motors back left, back right,
-@TeleOp
-public class TeleopMode extends OpMode {
+@Autonomous
+public class autoFirstTry extends OpMode {
     private DcMotor frontLeft;
     private DcMotor frontRight;
     private DcMotor backRight;
     private DcMotor backLeft;
     private DcMotor intake;
-    private DcMotor arm; // rotating arm with intake
-    private DcMotor bucket;
-    private DcMotor slides;
-
-    double armPower = 0.2; // this is a test number
-    double bucketPower = 0.1; // this is also a test number
-    double intakePower = 0.1; // this is also a test number
-
-
-    int step=0;
-    int delayStep=-1;
-    double endTime;
+    private DcMotor arm;
     public ElapsedTime timer = new ElapsedTime();
-
-    public void delayedStop(double delay){
-        if (delayStep!=step){
-            delayStep=step;
-            endTime=timer.milliseconds()+delay;
-
-        }
-        if (timer.milliseconds()>=endTime) {
-            step++;
-        }
-        //stops
-    }
-
-
 
 
     //puts motor names into phone language
@@ -58,11 +34,8 @@ public class TeleopMode extends OpMode {
         backRight = hardwareMap.get(DcMotor.class, "br");
         intake = hardwareMap.get(DcMotor.class, "in");
         arm = hardwareMap.get(DcMotor.class, "ar");
-        bucket = hardwareMap.get(DcMotor.class, "bu");
-        slides = hardwareMap.get(DcMotor.class, "sl");
-
     }
-//takes motor power and translates into joystick movements
+    //takes motor power and translates into joystick movements
     public void driveOmni(double y, double rx, double x){
         double maxValue = Math.max(Math.abs(y) + Math.abs(x) + Math.abs(rx), 1);
         double flPower = (y + x + rx) / maxValue;
@@ -80,7 +53,7 @@ public class TeleopMode extends OpMode {
 
 
     }
-    
+
    /* public void driveRaw(double flPower, double frPower, double brPower, double blPower){
         //fl, fr, br, bl
         double[] motorCoefficients = {1,1,1,1};
@@ -90,54 +63,29 @@ public class TeleopMode extends OpMode {
         backLeft.setPower(motorCoefficients[3]*blPower);
     }
    */
-    public void flipArm() {
 
-        arm.setPower(armPower);
-         //if(){ //slidesDown will be a boolean about slide position, we will make it later
-            step = 1;
-         // }
-
-        switch(step) {
-            case(0):
-                // make sure slide bucket is lowered [only runs if slides need to move down]
-
-                delayedStop(1000);
-                break;
-            case(1):
-                // move arm to back
-                arm.setPower(-1 * armPower);
-                delayedStop(1000);
-                break;
-            case(2):
-                // drop sample
-                intake.setPower(-1 * intakePower);
-                delayedStop(1000);
-                break;
-            case(3):
-                // flip arm back
-                arm.setPower(armPower);
-                delayedStop(1000);
-                break;
-
-        }
-
-    }
 
 //takes entire thing and makes it work cause yeah :)
 
-    public void loop() {
-        driveOmni(-1*gamepad1.left_stick_y, 1*gamepad1.right_stick_x, 1*gamepad1.left_stick_x);
-        if (gamepad1.a){
-            intake.setPower(.15);
-        } else if (gamepad1.b) {
-            intake.setPower(-.15);
-        } else {
-            intake.setPower(0);
-        }
-        if (gamepad1.x){
-            flipArm();
-        }
+    public void stopRobot(){
+        frontLeft.setPower(0);
+        frontRight.setPower(0);
+        backLeft.setPower(0);
+        backRight.setPower(0);
+    }
 
+    public void transferToSlides(){
 
     }
-}    
+
+    public void loop() {
+        if (timer.milliseconds()<1000 ) {
+            driveOmni(0, 0, -.5);
+        } else if (timer.milliseconds()>1000 && timer.milliseconds()<2000){
+            driveOmni(0 ,-5 ,0 );
+        } else {
+            stopRobot();
+        }
+    }
+
+}
