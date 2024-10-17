@@ -4,47 +4,20 @@ package org.firstinspires.ftc.teamcode;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
-import com.qualcomm.robotcore.hardware.CRServo;
-import com.qualcomm.robotcore.hardware.DcMotorSimple;
-import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
-
-import org.firstinspires.ftc.robotcore.internal.opmode.TelemetryImpl;
 
 
 //defines motors back left, back right,
 @TeleOp
-public class TeleopMode extends OpMode {
+public class JoshTeleopMode extends OpMode {
     private DcMotor frontLeft;
     private DcMotor frontRight;
     private DcMotor backRight;
     private DcMotor backLeft;
     private DcMotor intake;
     private DcMotor arm; // rotating arm with intake
-    private DcMotor bucket;
-    private DcMotor slides;
-
-    double armPower = 0.2; // this is a test number
-    double bucketPower = 0.1; // this is also a test number
-    double intakePower = 0.1; // this is also a test number
-
-
-    int step=0;
-    int delayStep=-1;
-    double endTime;
     public ElapsedTime timer = new ElapsedTime();
-
-    public void delayedStop(double delay){
-        if (delayStep!=step){
-            delayStep=step;
-            endTime=timer.milliseconds()+delay;
-
-        }
-        if (timer.milliseconds()>=endTime) {
-            step++;
-        }
-        //stops
-    }
+    float funnyTime = 0;
 
 
 
@@ -58,8 +31,6 @@ public class TeleopMode extends OpMode {
         backRight = hardwareMap.get(DcMotor.class, "br");
         intake = hardwareMap.get(DcMotor.class, "in");
         arm = hardwareMap.get(DcMotor.class, "ar");
-        bucket = hardwareMap.get(DcMotor.class, "bu");
-        slides = hardwareMap.get(DcMotor.class, "sl");
 
     }
 //takes motor power and translates into joystick movements
@@ -80,6 +51,7 @@ public class TeleopMode extends OpMode {
 
 
     }
+
     
    /* public void driveRaw(double flPower, double frPower, double brPower, double blPower){
         //fl, fr, br, bl
@@ -91,38 +63,17 @@ public class TeleopMode extends OpMode {
     }
    */
     public void flipArm() {
-
-        arm.setPower(armPower);
-         //if(){ //slidesDown will be a boolean about slide position, we will make it later
-            step = 1;
-         // }
-
-        switch(step) {
-            case(0):
-                // make sure slide bucket is lowered [only runs if slides need to move down]
-                slides.setPower(-.3);
-                delayedStop(1000);
-                // set slidesDown to true
-                break;
-            case(1):
-                // move arm to back
-                arm.setPower(-1 * armPower);
-                delayedStop(1000);
-                break;
-            case(2):
-                // drop sample
-                intake.setPower(-1 * intakePower);
-                delayedStop(1000);
-                break;
-            case(3):
-                // flip arm back
-                arm.setPower(armPower);
-                delayedStop(1000);
-                break;
-
+        funnyTime = (float) timer.milliseconds();
+        while (timer.milliseconds()<=1000+funnyTime) {
+            arm.setPower(.3);
         }
-
+        arm.setPower(0);
+        while (timer.milliseconds()>=1000+funnyTime && timer.milliseconds()<=2000){
+            intake.setPower(-.15);
+        }
+        intake.setPower(0);
     }
+
 
 //takes entire thing and makes it work cause yeah :)
 
@@ -136,9 +87,9 @@ public class TeleopMode extends OpMode {
             intake.setPower(0);
         }
         if (gamepad1.x){
+            while(gamepad1.x) { continue; }
             flipArm();
         }
-        //
 
 
     }
