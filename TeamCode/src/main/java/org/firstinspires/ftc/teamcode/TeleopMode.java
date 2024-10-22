@@ -27,17 +27,18 @@ public class TeleopMode extends OpMode {
     double armPower = 0.2; // this is a test number
     double bucketPower = 0.1; // this is also a test number
     double intakePower = 0.1; // this is also a test number
+    double slidePower = 0.2;
 
 
-    int step=0;
-    int delayStep=-1;
+    int step = 0;
+    int delayStep = -1;
     double endTime;
     public ElapsedTime timer = new ElapsedTime();
 
     public void delayedStop(double delay){
-        if (delayStep!=step){
-            delayStep=step;
-            endTime=timer.milliseconds()+delay;
+        if (delayStep != step){
+            delayStep = step;
+            endTime = timer.milliseconds()+delay;
 
         }
         if (timer.milliseconds()>=endTime) {
@@ -157,6 +158,7 @@ public class TeleopMode extends OpMode {
     }
 
 
+
     public void forwardsFlipArm() {
 
         arm.setPower(armPower);
@@ -179,8 +181,7 @@ public class TeleopMode extends OpMode {
 
 
 
-
-//takes entire thing and makes it work cause yeah :)
+// takes entire thing and makes it work cause yeah :)
 
     public void loop() {
         driveOmni(-1*gamepad1.left_stick_y, 1*gamepad1.right_stick_x, 1*gamepad1.left_stick_x);
@@ -192,12 +193,22 @@ public class TeleopMode extends OpMode {
         } else {
             intake.setPower(0);
         }
+
+
         if (gamepad1.x){
             backwardsFlipArm();
         } else if (gamepad1.y){
             forwardsFlipArm();
         }
 
-        //
+
+        if (gamepad1.dpad_up) {
+            slides.setPower(slidePower);
+        } else if (gamepad1.dpad_down) {
+            slides.setPower(-slidePower);
+        }
+
+
     }
+
 }    
