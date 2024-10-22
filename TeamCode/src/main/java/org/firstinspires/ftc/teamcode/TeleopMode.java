@@ -12,7 +12,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import org.firstinspires.ftc.robotcore.internal.opmode.TelemetryImpl;
 
 
-//defines motors back left, back right,
+// defines motors back left, back right,
 @TeleOp
 public class TeleopMode extends OpMode {
     private DcMotor frontLeft;
@@ -90,7 +90,7 @@ public class TeleopMode extends OpMode {
         backLeft.setPower(motorCoefficients[3]*blPower);
     }
    */
-    public void flipArm() {
+ /*   public void flipArm() {
 
         arm.setPower(armPower);
          //if(){ //slidesDown will be a boolean about slide position, we will make it later
@@ -122,12 +122,69 @@ public class TeleopMode extends OpMode {
 
         }
 
+    } */
+
+    public void backwardsFlipArm() {
+        arm.setPower(armPower);
+         //if(){ //slidesDown will be a boolean about slide position, we will make it later
+            step = 1;
+         // }
+
+        switch(step) {
+            case(0):
+                // make sure slide bucket is lowered [only runs if slides need to move down]
+                slides.setPower(-.3);
+                delayedStop(1000);
+                // set slidesDown to true
+                break;
+            case(1):
+                // move arm to back
+                slides.setPower(0);
+                arm.setPower(-1 * armPower);
+                delayedStop(1000);
+                break;
+            case(2):
+                // drop sample
+                arm.setPower(0);
+                intake.setPower(-1 * intakePower);
+                delayedStop(1000);
+                break;
+            case(3):
+                intake.setPower(0);
+
+        }
+
     }
+
+
+    public void forwardsFlipArm() {
+
+        arm.setPower(armPower);
+         //if(){ //slidesDown will be a boolean about slide position, we will make it later
+            step = 1;
+         // }
+
+        switch(step) {
+            case(0):
+                // flip arm back
+                arm.setPower(armPower);
+                delayedStop(1000);
+                break;
+            case(1):
+                arm.setPower(0);
+                break;
+        }
+
+    }
+
+
+
 
 //takes entire thing and makes it work cause yeah :)
 
     public void loop() {
         driveOmni(-1*gamepad1.left_stick_y, 1*gamepad1.right_stick_x, 1*gamepad1.left_stick_x);
+
         if (gamepad1.a){
             intake.setPower(.15);
         } else if (gamepad1.b) {
@@ -136,10 +193,11 @@ public class TeleopMode extends OpMode {
             intake.setPower(0);
         }
         if (gamepad1.x){
-            flipArm();
+            backwardsFlipArm();
+        } else if (gamepad1.y){
+            forwardsFlipArm();
         }
+
         //
-
-
     }
 }    

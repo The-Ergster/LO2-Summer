@@ -91,6 +91,5 @@ public class JoshTeleopMode extends OpMode {
             flipArm();
         }
 
-
     }
 }    
