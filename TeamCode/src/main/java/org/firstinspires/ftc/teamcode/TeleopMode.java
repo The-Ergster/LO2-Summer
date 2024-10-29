@@ -11,7 +11,7 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 import org.firstinspires.ftc.robotcore.internal.opmode.TelemetryImpl;
 
-
+//Boo
 // defines motors back left, back right,
 @TeleOp
 public class TeleopMode extends OpMode {
@@ -29,7 +29,7 @@ public class TeleopMode extends OpMode {
     double intakePower = 0.1; // this is also a test number
     double slidePower = 0.2;
 
-
+//I like cheese
     int step = 0;
     int delayStep = -1;
     double endTime;
@@ -48,7 +48,7 @@ public class TeleopMode extends OpMode {
     }
 
 
-
+//I eat cheese
 
     //puts motor names into phone language
     @Override
