@@ -62,6 +62,7 @@ public class JoshTeleopMode extends OpMode {
         backLeft.setPower(motorCoefficients[3]*blPower);
     }
    */
+   /* Specific commands */
     public void flipArm() {
         funnyTime = (float) timer.milliseconds();
         while (timer.milliseconds()<=1000+funnyTime) {
