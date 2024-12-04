@@ -29,8 +29,10 @@ public class OmniEncoders extends LinearOpMode {
 
 //    right.setDirection(DcMotorSimple.Direction.REVERSE);
 
-//    leftPos = 0;
-//    rightPos = 0;
+    // frontLeftPos = 0;
+    // frontRightPos = 0;
+    // backLeftPos = 0;
+    // backRightPos = 0;
 
     waitForStart();
 
@@ -39,6 +41,16 @@ public class OmniEncoders extends LinearOpMode {
   }
 
   private void drive(int x, int y, double speed) {
+
+    // calculate encoder counts
+
+
+    // frontLeftPos += ;
+    // frontRightPos += ;
+    // backLeftPos += ;
+    // backRightPos += ;
+
+    
 //    leftPos += leftTarget;
 //    rightPos += rightTarget;
 
