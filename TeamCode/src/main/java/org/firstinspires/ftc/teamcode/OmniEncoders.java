@@ -14,7 +14,8 @@ public class OmniEncoders extends LinearOpMode {
     private DcMotor frontRight;
     private DcMotor backRight;
     private DcMotor backLeft;  
-  
+    float diagonal_distance;
+    
   @Override
   public void runOpMode() {
     frontLeft = hardwareMap.get(DcMotor.class, "fl");
@@ -42,8 +43,11 @@ public class OmniEncoders extends LinearOpMode {
 
   private void drive(int x, int y, double speed) {
 
-    // calculate encoder counts
+    // calculate encoder stuff
+    // diagonal_distance = Math.sqrt(x ** 2 + y ** 2);
 
+    // find angle
+    
 
     // frontLeftPos += ;
     // frontRightPos += ;
