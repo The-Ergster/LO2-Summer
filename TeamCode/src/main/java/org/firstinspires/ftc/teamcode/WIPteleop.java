@@ -17,6 +17,7 @@ public class WIPteleop extends OpMode {
     private DcMotor backLeft;
     private DcMotor intake;
     private DcMotor slides;
+    private DcMotor bucket;
     private DcMotor arm; // rotating arm with intake
     public ElapsedTime timer = new ElapsedTime();
     float funnyTime = 0;
@@ -34,6 +35,7 @@ public class WIPteleop extends OpMode {
         intake = hardwareMap.get(DcMotor.class, "in");
         slides = hardwareMap.get(DcMotor.class, "sl");
         arm = hardwareMap.get(DcMotor.class, "ar");
+        bucket = hardwareMap.get(DcMotor.class, "bu");
 
     }
 //takes motor power and translates into joystick movements
@@ -97,6 +99,22 @@ public class WIPteleop extends OpMode {
             slides.setPower(-.7);
         } else if (gamepad1.y){
             slides.setPower(0.7);
+        } else {
+            slides.setPower(0);
+        }
+
+        if (gamepad1.right_bumper){
+            bucket.setPower(0.3);
+        } else if (gamepad1.left_bumper) {
+            bucket.setPower(-0.3);
+        } else {
+            bucket.setPower(0);
+        }
+
+        if (gamepad1.dpad_down){
+            arm.setPower(0.5);
+        } else if (gamepad1.dpad_up){
+            arm.setPower(-0.5);
         } else {
             slides.setPower(0);
         }
