@@ -8,13 +8,15 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 
 
 //defines motors back left, back right,
+
 @TeleOp
-public class JoshTeleopMode extends OpMode {
+public class WIPteleop extends OpMode {
     private DcMotor frontLeft;
     private DcMotor frontRight;
     private DcMotor backRight;
     private DcMotor backLeft;
     private DcMotor intake;
+    private DcMotor slides;
     private DcMotor arm; // rotating arm with intake
     public ElapsedTime timer = new ElapsedTime();
     float funnyTime = 0;
@@ -30,6 +32,7 @@ public class JoshTeleopMode extends OpMode {
         backLeft = hardwareMap.get(DcMotor.class, "bl");
         backRight = hardwareMap.get(DcMotor.class, "br");
         intake = hardwareMap.get(DcMotor.class, "in");
+        slides = hardwareMap.get(DcMotor.class, "sl");
         arm = hardwareMap.get(DcMotor.class, "ar");
 
     }
@@ -76,10 +79,12 @@ public class JoshTeleopMode extends OpMode {
     }
 
 
-//takes entire thing and makes it work cause yeah :)
+// takes entire thing and makes it work cause yeah :)
 
     public void loop() {
+
         driveOmni(-1*gamepad1.left_stick_y, 1*gamepad1.right_stick_x, 1*gamepad1.left_stick_x);
+
         if (gamepad1.a){
             intake.setPower(.15);
         } else if (gamepad1.b) {
@@ -87,9 +92,13 @@ public class JoshTeleopMode extends OpMode {
         } else {
             intake.setPower(0);
         }
+
         if (gamepad1.x){
-            while(gamepad1.x) { continue; }
-            flipArm();
+            slides.setPower(-.7);
+        } else if (gamepad1.y){
+            slides.setPower(0.7);
+        } else {
+            slides.setPower(0);
         }
 
     }

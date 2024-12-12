@@ -59,6 +59,7 @@ public class OmniEncoders extends LinearOpMode {
 //    rightPos += rightTarget;
 
 // !!!!!!
+/*
     left.setTargetPosition(leftPos);
     right.setTargetPosition(rightPos);
 
@@ -73,6 +74,7 @@ public class OmniEncoders extends LinearOpMode {
     while ( opModeIsActive() && left.isBusy() && right.isBusy() ) {
       idle();
     }
+   */
   }
   
 }

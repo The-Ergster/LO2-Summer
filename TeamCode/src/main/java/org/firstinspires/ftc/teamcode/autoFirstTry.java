@@ -9,6 +9,7 @@ import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.robotcore.internal.opmode.TelemetryImpl;
 
@@ -23,6 +24,7 @@ public class autoFirstTry extends OpMode {
     private DcMotor intake;
     private DcMotor arm;
     public ElapsedTime timer = new ElapsedTime();
+    float funnyTime = 0;
 
 
     //puts motor names into phone language
@@ -42,7 +44,6 @@ public class autoFirstTry extends OpMode {
         double blPower = (y - x + rx) / maxValue;
         double frPower = (y - x - rx) / maxValue;
         double brPower = (y + x - rx) / maxValue;
-
 
 //sets motor power combined with joystick equal to phone language
 
@@ -78,14 +79,32 @@ public class autoFirstTry extends OpMode {
 
     }
 
+    @Override
+
     public void loop() {
-        if (timer.milliseconds()<1000 ) {
-            driveOmni(0, 0, -.5);
-        } else if (timer.milliseconds()>1000 && timer.milliseconds()<2000){
+
+        funnyTime = (float) timer.milliseconds();
+        while (timer.milliseconds() - funnyTime < 500) {
+            driveOmni(1,0,0);
+        }
+
+/*        // Move forward
+        while (timer.milliseconds() - funnyTime < 2400) {
+            driveOmni(0.1, 0, 0);
+        }
+
+        // Rotate left
+        while (timer.milliseconds() - funnyTime >1000 && timer.milliseconds() - funnyTime <2000) {
             driveOmni(0 ,-5 ,0 );
-        } else {
+        }
+
+        //
+        while (funnyTime != 0) {
             stopRobot();
         }
+        */
+
+
     }
 
 }

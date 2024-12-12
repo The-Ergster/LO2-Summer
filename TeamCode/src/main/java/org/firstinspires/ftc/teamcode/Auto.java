@@ -26,11 +26,11 @@ import org.openftc.easyopencv.OpenCvInternalCamera;
 
 import java.util.List;
 
-@Autonomous
+//@Autonomous
 
-public class Auto {
-
-
+//public class Auto extends OpMode{
 
 
-}
+
+
+//}
