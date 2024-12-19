@@ -116,7 +116,7 @@ public class WIPteleop extends OpMode {
         } else if (gamepad1.dpad_up){
             arm.setPower(-0.5);
         } else {
-            slides.setPower(0);
+            arm.setPower(0);
         }
 
     }
