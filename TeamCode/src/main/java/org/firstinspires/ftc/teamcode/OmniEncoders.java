@@ -13,7 +13,7 @@ public class OmniEncoders extends LinearOpMode {
     private DcMotor frontLeft;
     private DcMotor frontRight;
     private DcMotor backRight;
-    private DcMotor backLeft;  
+    private DcMotor backLeft;
     float diagonal_distance;
     
   @Override

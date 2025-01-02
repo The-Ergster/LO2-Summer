@@ -3,7 +3,7 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
-import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+//import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotorSimple;
@@ -12,6 +12,8 @@ import com.qualcomm.robotcore.util.ElapsedTime;
 import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 
 import org.firstinspires.ftc.robotcore.internal.opmode.TelemetryImpl;
+
+import java.util.List;
 
 
 //defines motors back left, back right,
@@ -36,6 +38,13 @@ public class autoFirstTry extends OpMode {
         backRight = hardwareMap.get(DcMotor.class, "br");
         intake = hardwareMap.get(DcMotor.class, "in");
         arm = hardwareMap.get(DcMotor.class, "ar");
+
+        frontLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        frontRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        backLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+        backRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
+
+
     }
     //takes motor power and translates into joystick movements
     public void driveOmni(double y, double rx, double x){
@@ -68,11 +77,29 @@ public class autoFirstTry extends OpMode {
 
 //takes entire thing and makes it work cause yeah :)
 
+    public double[] calculateMotorPowerGivenCartesianPoint(double deltaX, double deltaY) {
+//        double[][] cartesianToWheelMatrix = {{-Math.sqrt(2)/4, Math.sqrt(2)/4}, {-Math.sqrt(2)/4, -Math.sqrt(2)/4}};
+//        double[] distance = {0.0, 0.0};
+        double[] wheelCoordsFrBr = {(Math.sqrt(2)*deltaX+Math.sqrt(2)*deltaY)/2.0,(-Math.sqrt(2)*deltaX+Math.sqrt(2)*deltaY)/2.0};
+        double[] answer = {wheelCoordsFrBr[0], wheelCoordsFrBr[1], wheelCoordsFrBr[0], wheelCoordsFrBr[1]};
+        // answer is in fr br bl fl
+        double cmToTick = 537.7/30.16;
+        double[] answerTicks = {answer[0]*cmToTick, answer[1]*cmToTick, answer[2]*cmToTick, answer[3]*cmToTick};
+        return answerTicks;
+    }
+
     public void stopRobot(){
         frontLeft.setPower(0);
         frontRight.setPower(0);
         backLeft.setPower(0);
         backRight.setPower(0);
+    }
+
+    public void setMotorTargets(double[] answerTicks) {
+        frontLeft.setTargetPosition((int)answerTicks[0]);
+        frontRight.setTargetPosition((int)answerTicks[1]);
+        backLeft.setTargetPosition((int)answerTicks[2]);
+        backRight.setTargetPosition((int)answerTicks[3]);
     }
 
     public void transferToSlides(){
@@ -81,12 +108,31 @@ public class autoFirstTry extends OpMode {
 
     @Override
 
+    public void start() {
+        setMotorTargets(calculateMotorPowerGivenCartesianPoint(30.0, 30.0));
+
+        frontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        frontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        backLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+        backRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
+
+        frontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        frontRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        backLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+        backRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+    }
+
+    @Override
     public void loop() {
 
-        funnyTime = (float) timer.milliseconds();
-        while (timer.milliseconds() - funnyTime < 500) {
-            driveOmni(1,0,0);
-        }
+    }
+
+    // public void loop() {
+
+        //funnyTime = (float) timer.milliseconds();
+       // while (timer.milliseconds() - funnyTime < 500) {
+          //  driveOmni(1,0,0);
+        //}
 
 /*        // Move forward
         while (timer.milliseconds() - funnyTime < 2400) {
@@ -105,6 +151,6 @@ public class autoFirstTry extends OpMode {
         */
 
 
-    }
+    //}
 
 }
