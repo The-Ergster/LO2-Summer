@@ -109,7 +109,7 @@ public class autoFirstTry extends OpMode {
     @Override
 
     public void start() {
-        setMotorTargets(calculateMotorPowerGivenCartesianPoint(30.0, 30.0));
+        setMotorTargets(calculateMotorPowerGivenCartesianPoint(300.0, 300.0));
 
         frontLeft.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);
         frontRight.setMode(DcMotor.RunMode.STOP_AND_RESET_ENCODER);

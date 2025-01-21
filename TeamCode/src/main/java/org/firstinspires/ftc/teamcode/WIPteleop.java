@@ -105,17 +105,17 @@ public class WIPteleop extends OpMode {
         }
 
         if (gamepad1.right_bumper){
-            bucket.setPosition(2);
+            bucket.setPosition(1);
         } else if (gamepad1.left_bumper) {
-            bucket.setPosition(-2);
+            bucket.setPosition(-1);
         }
 
         if (gamepad1.dpad_down){
-            arm.setPower(0.5);
+            arm.setPower(1);
         } else if (gamepad1.dpad_up){
-            arm.setPower(-0.5);
+            arm.setPower(-1);
         } else {
-            slides.setPower(0);
+            arm.setPower(0);
         }
 
     }
