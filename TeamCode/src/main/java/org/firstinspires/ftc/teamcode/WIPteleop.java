@@ -19,7 +19,7 @@ public class WIPteleop extends OpMode {
     private DcMotor backLeft;
     private DcMotor intake;
     private DcMotor slides;
-    private Servo bucket;
+    private CRServo bucket;
     private DcMotor arm; // rotating arm with intake
     public ElapsedTime timer = new ElapsedTime();
     float funnyTime = 0;
@@ -37,7 +37,7 @@ public class WIPteleop extends OpMode {
         intake = hardwareMap.get(DcMotor.class, "in");
         slides = hardwareMap.get(DcMotor.class, "sl");
         arm = hardwareMap.get(DcMotor.class, "ar");
-        bucket = hardwareMap.get(Servo.class, "bu");
+        bucket = hardwareMap.get(CRServo.class, "bu");
     }
 //takes motor power and translates into joystick movements
     public void driveOmni(double y, double rx, double x){
@@ -87,33 +87,36 @@ public class WIPteleop extends OpMode {
     public void loop() {
 
         driveOmni(-1*gamepad1.left_stick_y, 1*gamepad1.right_stick_x, 1*gamepad1.left_stick_x);
-
+// actually arm
         if (gamepad1.a){
-            intake.setPower(.15);
+            intake.setPower(0.7);
         } else if (gamepad1.b) {
-            intake.setPower(-.15);
+            intake.setPower(-0.7);
         } else {
             intake.setPower(0);
         }
 
         if (gamepad1.x){
-            slides.setPower(-.7);
+            slides.setPower(-1.0);
         } else if (gamepad1.y){
-            slides.setPower(0.7);
+            slides.setPower(1.0);
         } else {
             slides.setPower(0);
         }
 
         if (gamepad1.right_bumper){
-            bucket.setPosition(0.0);
+            bucket.setPower(1.0);
         } else if (gamepad1.left_bumper) {
-            bucket.setPosition(-1.0);
+            bucket.setPower(-1.0);
         } else
-            bucket.setPosition(0.0);
+            bucket.setPower(0.0);
 
-
+// actually intake
         if (gamepad1.dpad_down){
             arm.setPower(1);
+            telemetry.addData("daddbhf","ahhhh");
+            telemetry.update();
+
         } else if (gamepad1.dpad_up){
             arm.setPower(-1);
         } else {
