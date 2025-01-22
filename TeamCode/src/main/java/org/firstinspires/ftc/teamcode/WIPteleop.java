@@ -3,6 +3,7 @@ package org.firstinspires.ftc.teamcode;
 
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.Servo;
 import com.qualcomm.robotcore.util.ElapsedTime;
@@ -37,7 +38,6 @@ public class WIPteleop extends OpMode {
         slides = hardwareMap.get(DcMotor.class, "sl");
         arm = hardwareMap.get(DcMotor.class, "ar");
         bucket = hardwareMap.get(Servo.class, "bu");
-
     }
 //takes motor power and translates into joystick movements
     public void driveOmni(double y, double rx, double x){
@@ -105,10 +105,12 @@ public class WIPteleop extends OpMode {
         }
 
         if (gamepad1.right_bumper){
-            bucket.setPosition(1);
+            bucket.setPosition(0.0);
         } else if (gamepad1.left_bumper) {
-            bucket.setPosition(-1);
-        }
+            bucket.setPosition(-1.0);
+        } else
+            bucket.setPosition(0.0);
+
 
         if (gamepad1.dpad_down){
             arm.setPower(1);
