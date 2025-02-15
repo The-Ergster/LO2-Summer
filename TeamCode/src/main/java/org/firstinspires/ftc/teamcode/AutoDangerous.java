@@ -1,24 +1,20 @@
 package org.firstinspires.ftc.teamcode;
 
-import static android.os.SystemClock.sleep;
-
 import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.hardwareMap;
+import static org.firstinspires.ftc.robotcore.external.BlocksOpModeCompanion.telemetry;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
-import com.qualcomm.robotcore.eventloop.opmode.OpMode;
+import com.qualcomm.robotcore.eventloop.opmode.LinearOpMode;
 //import com.qualcomm.robotcore.eventloop.opmode.TeleOp;
+import com.qualcomm.robotcore.eventloop.opmode.OpMode;
 import com.qualcomm.robotcore.hardware.DcMotor;
 import com.qualcomm.robotcore.hardware.CRServo;
 import com.qualcomm.robotcore.util.ElapsedTime;
 
 @Autonomous
-public class AutoDangerous extends OpMode{
+public class AutoDangerous extends OpMode {
 
-
-
-
-
-    //defines motors back left, back right,
+        //defines motors back left, back right,
         private DcMotor frontLeft;
         private DcMotor frontRight;
         private DcMotor backRight;
@@ -38,7 +34,8 @@ public class AutoDangerous extends OpMode{
 
         //puts motor names into phone language
 
-        public void init() {
+
+    public final void init() {
             timer = new ElapsedTime();
 
             frontLeft = hardwareMap.get(DcMotor.class, "fl");
@@ -55,7 +52,7 @@ public class AutoDangerous extends OpMode{
             backLeft.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             backRight.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
             slides.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        }
+    }
         //takes motor power and translates into joystick movements
         public void driveOmni(double y, double rx, double x){
             double maxValue = Math.max(Math.abs(y) + Math.abs(x) + Math.abs(rx), 1);
@@ -179,7 +176,7 @@ public class AutoDangerous extends OpMode{
         }
 
 
-        public void start() {
+      /*  public void start() {
 
 
             startTime = (int) timer.milliseconds();
@@ -194,24 +191,14 @@ public class AutoDangerous extends OpMode{
             intake.setPower(0.3);
             intake.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
-            //this is supposed to rotate 90 degrees
-
-            //setMotorTargets(calculateEncoderPositionGivenDegrees(-90.0));
-
-            //Move slides up all the way
-
-        }
-
-
-        public void loop() {
-
             int startTime = (int) timer.milliseconds(); // Get current time
-            int duration = 2000; // Set desired duration in milliseconds
+            int duration = 2000;// Set desired duration in milliseconds
+
             currentStep = 1; // Sets step to 0 to be played
 
 /*            while (System.currentTimeMillis() < startTime + duration) {
                 bucket.setPower(0.5); // Set power to 0.5 for clockwise rotation
-            } */
+            }
 
             // step 1: wait for 2 seconds
             outputNextStep();
@@ -243,10 +230,12 @@ public class AutoDangerous extends OpMode{
 
             // step 5: rotate the servo
             outputNextStep();
-            bucket.setPower(0.1);
-            while (slides.isBusy()) {
-                continue;
+
+            while(System.currentTimeMillis() < startTime + duration){
+                bucket.setPower(0.1);
             }
+            bucket.setPower(0);
+
 
             // step 6: stop the bucket
             bucket.setPower(0); // Stop the servo
@@ -254,32 +243,97 @@ public class AutoDangerous extends OpMode{
 
 
         }
-
-
-        //\\ public void loop() {
-
-        //funnyTime = (float) timer.milliseconds();
-        // while (timer.milliseconds() - funnyTime < 500) {
-        //  driveOmni(1,0,0);
-        //}
-
-/*        // Move forward
-        while (timer.milliseconds() - funnyTime < 2400) {
-            driveOmni(0.1, 0, 0);
-        }
-
-        // Rotate left
-        while (timer.milliseconds() - funnyTime >1000 && timer.milliseconds() - funnyTime <2000) {
-            driveOmni(0 ,-5 ,0 );
-        }
-
-        //
-        while (funnyTime != 0) {
-            stopRobot();
-        }
         */
 
 
-        //}
+        public void start() {
+            int startTime = (int) timer.milliseconds(); // Get current time
+            int duration = 2000;
 
-    }
+            setMotorTargets(calculateMotorPowerGivenCartesianPoint(190.0,0));
+            frontLeft.setPower(0.8);
+            frontRight.setPower(-0.8);
+            backLeft.setPower(-0.8);
+            backRight.setPower(0.8);
+
+
+
+
+
+            //outputNextStep();
+            /*
+            while (startTime + duration > timer.milliseconds()){
+                continue;
+            }
+
+            // step 2: move forward
+            outputNextStep();
+            setMotorTargets(calculateMotorPowerGivenCartesianPoint(-80, 0));
+            frontLeft.setPower(0.3);
+            frontRight.setPower(0.3);
+            backLeft.setPower(0.3);
+            backRight.setPower(0.3);
+
+            frontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            frontRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            backLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            backRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+
+
+
+            // step 3: Rotate left
+            outputNextStep();
+            while (timer.milliseconds() - startTime < 2000) {
+                driveOmni(0 ,-.5 ,0 );
+            }
+
+            // step 4: put up the slides
+           // outputNextStep();
+            slides.setTargetPosition(-2900);
+            slides.setPower(0.7);
+            slides.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            while (slides.isBusy()) {
+              continue;
+            }
+            frontLeft.setPower(0.3);
+            frontRight.setPower(-0.3);
+            backLeft.setPower(0.3);
+            backRight.setPower(-0.3);
+
+            frontLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            frontRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            backLeft.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+            backRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
+
+
+            // step 5: rotate the servo
+            outputNextStep();
+
+            while(System.currentTimeMillis() < startTime + duration){
+                bucket.setPower(0.1);
+            }
+            bucket.setPower(0);
+
+
+            // step 6: stop the bucket
+            bucket.setPower(0); // Stop the servo
+
+
+            */
+        }
+
+        public void loop(){
+
+        }
+}
+
+
+            //this is supposed to rotate 90 degrees
+
+            //setMotorTargets(calculateEncoderPositionGivenDegrees(-90.0));
+
+            //Move slides up all the way
+
+
+

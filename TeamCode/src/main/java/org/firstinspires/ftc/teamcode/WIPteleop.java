@@ -74,7 +74,7 @@ public class WIPteleop extends OpMode {
 
 
         //slides.setMode(DcMotor.RunMode.RUN_USING_ENCODER);
-        slides.setTargetPosition(-70);
+        slides.setTargetPosition(-500);
         slides.setPower(0.7);
         slides.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
@@ -225,7 +225,7 @@ public class WIPteleop extends OpMode {
             slides.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
         } else if(!slidesUp){
-            slides.setTargetPosition(-70);
+            slides.setTargetPosition(-500);
             slides.setPower(0.7);
             slides.setMode(DcMotor.RunMode.RUN_TO_POSITION);
         }
