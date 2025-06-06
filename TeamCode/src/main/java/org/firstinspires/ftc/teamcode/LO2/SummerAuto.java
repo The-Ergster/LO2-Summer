@@ -1,3 +1,4 @@
+//A solid 99% of this was made by me just googling and asking ChatGPT how to do certain things so use at your own risk
 package org.firstinspires.ftc.teamcode.LO2;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
