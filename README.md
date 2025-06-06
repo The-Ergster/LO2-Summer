@@ -1,3 +1,25 @@
+Hello, this is a little summer project i made fixing the LO2 code from last year
+Everything probably works, anyway here is the legal jargon
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 ## NOTICE
 
 This repository contains the public FTC SDK for the INTO THE DEEP (2024-2025) competition season.
