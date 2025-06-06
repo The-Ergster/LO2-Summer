@@ -1,4 +1,4 @@
-package org.firstinspires.ftc.robotcontroller.LO2;
+package org.firstinspires.ftc.teamcode.LO2;
 
 import com.qualcomm.robotcore.eventloop.opmode.Autonomous;
 import com.qualcomm.robotcore.eventloop.opmode.OpMode;
