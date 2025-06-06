@@ -71,6 +71,7 @@ public class SummerOp extends OpMode {
     }
 
     public void loop() {
+        //Fun fact, this one line is what drives everything
         driveOmni(-1*gamepad1.left_stick_y, 1*gamepad1.right_stick_x, 1*gamepad1.left_stick_x);
 
         //Telemetry for all buttons
