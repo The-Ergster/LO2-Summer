@@ -16,14 +16,14 @@ public class SummerAuto extends OpMode {
     // CONSTANTS: change these to  robot specs
 
     // Encoder ticks per motor revolution (hardware-specific)
-    final double TICKS_PER_REV = 537.7;
+    final double TICKS_PER_REV = 537.6;
 
     // Wheel diameter in centimeters
-    final double WHEEL_DIAMETER = 9.6;
+    final double WHEEL_DIAMETER = 9.5;
 
     // If each corner of the robot was a wheel what would the specs be
-    final double ROBOT_WIDTH = 40;
-    final double ROBOT_LENGTH = 35;
+    final double ROBOT_WIDTH = 39;
+    final double ROBOT_LENGTH = 33;
 
     // Calculate cm traveled per encoder tick:
     // Equation: cm_per_tick = (π × wheel_diameter) / TICKS_PER_REV
@@ -116,13 +116,13 @@ public class SummerAuto extends OpMode {
         stopMotors();
     }
 
-    // Strafe a given distance (cm) (positive is right - is left)
+    // Strafe a given distance (cm) (+ is right - is left)
     public void strafe(double distanceCm) {
         int targetTicks = (int)(distanceCm / CM_PER_TICK);
 
         resetEncoders();
 
-        // Set targets for strafing right
+        // Set targets for strafing
         frontLeft.setTargetPosition(targetTicks);
         backLeft.setTargetPosition(-targetTicks);
         frontRight.setTargetPosition(-targetTicks);
