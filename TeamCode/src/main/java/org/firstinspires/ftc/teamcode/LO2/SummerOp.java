@@ -27,7 +27,7 @@ public class SummerOp extends OpMode {
         backLeft.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
         backRight.setMode(DcMotorEx.RunMode.RUN_USING_ENCODER);
 
-        telemetry.addLine("Initiated");
+        telemetry.addLine("Initiated 1.0");
         telemetry.update();
     }
 
@@ -92,3 +92,6 @@ public class SummerOp extends OpMode {
         telemetry.update();
     }
 }
+
+
+

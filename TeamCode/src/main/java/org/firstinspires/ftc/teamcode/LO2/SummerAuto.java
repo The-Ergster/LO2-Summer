@@ -101,10 +101,10 @@ public class SummerAuto extends OpMode {
         backRight.setMode(DcMotor.RunMode.RUN_TO_POSITION);
 
         // Set motor power forward
-        frontLeft.setPower(0.5);
-        backLeft.setPower(0.5);
-        frontRight.setPower(0.5);
-        backRight.setPower(0.5);
+        frontLeft.setPower(0.7);
+        backLeft.setPower(0.7);
+        frontRight.setPower(0.7);
+        backRight.setPower(0.7);
 
         // Wait until motors reach the target position
         while (frontLeft.isBusy() && backLeft.isBusy() && frontRight.isBusy() && backRight.isBusy()) {
