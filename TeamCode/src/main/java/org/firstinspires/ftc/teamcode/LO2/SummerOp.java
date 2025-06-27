@@ -33,15 +33,10 @@ public class SummerOp extends OpMode {
 
     public void driveOmni(double y, double rx, double x) {
         //braking
-        final double DEADZONE = 0.05;
         final double MAX_TICKS_PER_SECOND = 4661;
 
-        // Apply deadzone
-        if (Math.abs(y) < DEADZONE) y = 0;
-        if (Math.abs(rx) < DEADZONE) rx = 0;
-        if (Math.abs(x) < DEADZONE) x = 0;
 
-        if (y == 0 && rx == 0 && x == 0) {
+        if (gamepad1.left_stick_y <= 0.05 && gamepad1.right_stick_x <= 0 && gamepad1.left_stick_x <= 0) {
             // Stop all motors
             frontLeft.setVelocity(0);
             backLeft.setVelocity(0);
@@ -79,17 +74,9 @@ public class SummerOp extends OpMode {
     public void loop() {
         //Fun fact, this one line is what drives everything
         //actual code for movement
-        double y = -gamepad1.left_stick_y; // Forward/Backward
-        double x = gamepad1.left_stick_x;  // Strafing
-        double rx = gamepad1.right_stick_x; // Rotation
+        driveOmni(-1*gamepad1.left_stick_y, 1*gamepad1.right_stick_x, 1*gamepad1.left_stick_x);
 
-        driveOmni(y, rx, x);
 
-        // Telemetry for movement
-        //If you add more buttons add more telemetry so we know whats going through
-        //Debug purposes only
-        telemetry.addData("Gamepad 1", "Left Y: %.2f | Left X: %.2f | Right X: %.2f", y, x, rx);
-        telemetry.update();
     }
 }
 
